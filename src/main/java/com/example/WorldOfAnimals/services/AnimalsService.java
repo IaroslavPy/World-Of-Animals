@@ -3,6 +3,7 @@ package com.example.WorldOfAnimals.services;
 
 import com.example.WorldOfAnimals.models.AnimalBehavior;
 import com.example.WorldOfAnimals.models.Animals;
+import com.example.WorldOfAnimals.models.AnimalsGroup;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -17,8 +18,7 @@ public class AnimalsService {
                 animals[randomAnimal].getBehavior());
     }
 
-    public String getAnimals() {
-        return Arrays.toString(animals);
+    public AnimalsGroup getAnimals() {
+        return new AnimalsGroup(Arrays.toString(animals));
     }
-
 }

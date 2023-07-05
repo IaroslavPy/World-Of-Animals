@@ -2,6 +2,7 @@ package com.example.WorldOfAnimals.controllers;
 
 
 import com.example.WorldOfAnimals.models.AnimalBehavior;
+import com.example.WorldOfAnimals.models.AnimalsGroup;
 import com.example.WorldOfAnimals.services.AnimalsService;
 import com.example.WorldOfAnimals.utils.RandomPositionEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,7 @@ public class AnimalsController {
     }
 
     @GetMapping("/animals")
-    public String getAnimals() {
+    public AnimalsGroup getAnimals() {
         return service.getAnimals();
     }
-
-
 }
