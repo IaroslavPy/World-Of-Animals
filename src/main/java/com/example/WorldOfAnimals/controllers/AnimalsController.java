@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AnimalsController {
 
     @Autowired
-    AnimalsService service;
+    private AnimalsService service;
     @Autowired
-    RandomPositionEnum randomAnimal;
+    private RandomPositionEnum randomAnimal;
 
     @GetMapping
     public AnimalBehavior getAnimal() {
