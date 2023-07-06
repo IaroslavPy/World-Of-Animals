@@ -6,6 +6,7 @@ import com.example.WorldOfAnimals.models.AnimalsGroup;
 import com.example.WorldOfAnimals.services.AnimalsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,9 +18,9 @@ public class AnimalsController {
     private AnimalsService service;
 
 
-    @GetMapping
-    public AnimalBehavior getAnimal() {
-        return service.getAnimalBehavior();
+    @GetMapping("/animal/{name}")
+    public AnimalBehavior getAnimal(@PathVariable("name") String name) {
+        return service.getAnimalBehavior(name);
     }
 
     @GetMapping("/animals")
