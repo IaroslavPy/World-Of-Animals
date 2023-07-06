@@ -18,5 +18,5 @@ public enum Animals {
     LEOPARD("I can hunt"),
     SHEEP("I can sound");
 
-    private String behavior;
+    private final String behavior;
 }
