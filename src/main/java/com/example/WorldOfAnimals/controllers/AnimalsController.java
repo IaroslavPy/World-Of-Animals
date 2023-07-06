@@ -20,8 +20,8 @@ public class AnimalsController {
     }
 
     @GetMapping("/animal/{name}")
-    public AnimalBehavior getAnimal(@PathVariable("name") String name) {
-        return service.getAnimalBehavior(name);
+    public AnimalBehavior getAnimal(@PathVariable("name") String nameAnimal) {
+        return service.getAnimalBehavior(nameAnimal);
     }
 
     @GetMapping("/animals")
