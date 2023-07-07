@@ -20,8 +20,9 @@ public class AnimalsController {
     private final AnimalsService service;
 
     @GetMapping
-    public AnimalsGroup getAnimals() {
-        return service.getAnimals();
+    public ResponseEntity<AnimalsGroup> getAnimals() {
+        AnimalsGroup animalsGroup = service.getAnimals();
+        return ResponseEntity.ok(animalsGroup);
     }
 
     @GetMapping("/{name}")
