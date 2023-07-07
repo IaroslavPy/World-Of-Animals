@@ -4,4 +4,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class AnimalNotFoundException extends Exception{
+
+    private String message;
 }
