@@ -1,1 +1,7 @@
-server.port: 9721
+server:
+  port: 9721
+
+spring:
+  mvc:
+    servlet:
+      path: /api
