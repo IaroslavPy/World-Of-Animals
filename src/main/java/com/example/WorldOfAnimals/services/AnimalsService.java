@@ -11,21 +11,9 @@ import java.util.Arrays;
 @Service
 public class AnimalsService {
 
-    private final Animals[] animals = Animals.values();
-
     public AnimalBehavior getAnimalBehavior(String animalName) {
-
-        String[] animalsString = new String[animals.length];
-
-        for (int i = 0; i < animalsString.length; i++) {
-            animalsString[i] = animals[i].name();
-        }
-
-        if (Arrays.asList(animalsString).contains(animalName))
-            return new AnimalBehavior(animalName,
-                    Animals.valueOf(animalName).getBehavior());
-        else return new AnimalBehavior(animalName + " - absent in base!",
-                "Not exist!");
+        Animals animal = Animals.getAnimal(animalName);
+        return new AnimalBehavior(animalName, animal.getBehavior());
     }
 
     public AnimalsGroup getAnimals() {
