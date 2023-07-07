@@ -1,6 +1,7 @@
 package com.example.WorldOfAnimals.controllers;
 
 
+import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.models.AnimalBehavior;
 import com.example.WorldOfAnimals.models.AnimalsGroup;
 import com.example.WorldOfAnimals.services.AnimalsService;

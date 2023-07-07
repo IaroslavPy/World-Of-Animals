@@ -1,5 +1,6 @@
 package com.example.WorldOfAnimals.models;
 
+import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -22,7 +23,7 @@ public enum Animals {
 
     private final String behavior;
 
-    public static Animals getAnimal(String type) {
+    public static Animals getAnimal(String type) throws AnimalNotFoundException {
         return Arrays.stream(Animals.values())
                 .filter(animal -> animal.name().equals(type.toUpperCase()))
                 .findFirst()
