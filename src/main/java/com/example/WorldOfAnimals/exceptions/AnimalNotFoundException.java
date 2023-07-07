@@ -1,9 +1,8 @@
 package com.example.WorldOfAnimals.exceptions;
 
-import lombok.AllArgsConstructor;
+public class AnimalNotFoundException extends Exception {
 
-@AllArgsConstructor
-public class AnimalNotFoundException extends Exception{
-
-    private String message;
+    public AnimalNotFoundException(String message) {
+        super(message);
+    }
 }
