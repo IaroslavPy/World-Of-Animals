@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/animals")
 public class AnimalsController {
 
     private final AnimalsService service;
@@ -19,13 +19,13 @@ public class AnimalsController {
         this.service = service;
     }
 
-    @GetMapping("/animal/{name}")
-    public AnimalBehavior getAnimal(@PathVariable("name") String nameAnimal) {
-        return service.getAnimalBehavior(nameAnimal);
-    }
-
-    @GetMapping("/animals")
+    @GetMapping
     public AnimalsGroup getAnimals() {
         return service.getAnimals();
+    }
+
+    @GetMapping("/{name}")
+    public AnimalBehavior getAnimal(@PathVariable("name") String nameAnimal) {
+        return service.getAnimalBehavior(nameAnimal);
     }
 }
