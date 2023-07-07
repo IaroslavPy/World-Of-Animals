@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 
-// Created for view as JSON
 public class AnimalsGroup {
 
     private String animalsType;
