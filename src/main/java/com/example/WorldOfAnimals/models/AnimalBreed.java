@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "animal_breeds")
 public class AnimalBreed {
 
     @Id
@@ -24,6 +24,5 @@ public class AnimalBreed {
     @Column
     @ManyToOne
     @JoinColumn
-    // These annotations without parameter because I will know them after check
     private AnimalTypeEntity type;
 }
