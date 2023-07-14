@@ -5,3 +5,13 @@ spring:
   mvc:
     servlet:
       path: /api
+  datasource:
+    url: jdbc:mysql://localhost:3306/animals_db
+    username: devPi
+    password: devPi
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
