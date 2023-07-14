@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "(animal_types")
+@Table(name = "animal_types")
 public class AnimalTypeEntity {
 
     @Id
