@@ -9,11 +9,15 @@ GET http://localhost:9721/api/animalTypes
 
 GET http://localhost:9721/api/animalTypes/5
 
-
 POST http://localhost:9721/api/animalTypes 
 
 {
 "name": "Snake"
+}
+
+{
+"id": 2,
+"name": "Cat"
 }
 
 DELETE http://localhost:9721/api/animalTypes/6

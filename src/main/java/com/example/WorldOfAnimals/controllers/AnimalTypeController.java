@@ -25,7 +25,7 @@ public class AnimalTypeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AnimalTypeEntity saveUser(@RequestBody AnimalTypeEntity animalType){
+    public AnimalTypeEntity saveUser(@RequestBody AnimalTypeEntity animalType) {
         return service.saveOrUpdate(animalType);
     }
 
@@ -40,7 +40,7 @@ public class AnimalTypeController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAnimalTypeById(@PathVariable(value = "id") Integer id){
+    public void deleteAnimalTypeById(@PathVariable(value = "id") Integer id) {
         service.deleteAnimalTypeById(id);
     }
 }
