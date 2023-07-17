@@ -5,4 +5,7 @@ GET http://localhost:9721/api/animals/WOLF - right
 GET http://localhost:9721/api/animals/WOLF1 - wrong
 
 
-GET http://localhost:9721/api/animalTypes  - right
+GET http://localhost:9721/api/animalTypes
+
+GET http://localhost:9721/api/animalTypes/5
+

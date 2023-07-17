@@ -24,17 +24,11 @@ public class AnimalTypeController {
 
     @GetMapping
     public ResponseEntity<List<AnimalTypeEntity>> getAnimalTypes() {
-//        AnimalTypeEntity animalTypes = service.getAnimalsType();
         return ResponseEntity.ok(service.getAnimalsType());
     }
 
-//    @GetMapping("/{name}")
-//    public ResponseEntity<AnimalBehavior> getAnimal(@PathVariable("name") String nameAnimal) {
-//        try {
-//            AnimalBehavior animalBehavior = service.getAnimalBehavior(nameAnimal);
-//            return ResponseEntity.ok(animalBehavior);
-//        } catch (AnimalNotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<AnimalTypeEntity> getAnimalTypeById(@PathVariable("id") Integer id) {
+        return service.getAnimalTypeById(id);
+    }
 }

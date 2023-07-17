@@ -1,21 +1,15 @@
 package com.example.WorldOfAnimals.services;
 
 
-import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
-import com.example.WorldOfAnimals.models.AnimalBehavior;
 import com.example.WorldOfAnimals.models.AnimalTypeEntity;
-import com.example.WorldOfAnimals.models.Animals;
-import com.example.WorldOfAnimals.models.AnimalsGroup;
 import com.example.WorldOfAnimals.repositories.AnimalTypeRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,5 +19,13 @@ public class AnimalTypeService {
 
  public List<AnimalTypeEntity> getAnimalsType() {
      return new ArrayList<>(repository.findAll());
+    }
+
+    public ResponseEntity<AnimalTypeEntity> getAnimalTypeById(Integer id){
+        Optional<AnimalTypeEntity> animalType = repository.findById(id);
+
+        return animalType.map(value ->
+                ResponseEntity.ok().body(value)).orElseGet(() ->
+                ResponseEntity.notFound().build());
     }
 }
