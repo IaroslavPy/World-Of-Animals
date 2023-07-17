@@ -15,4 +15,6 @@ public interface AnimalTypeRepository extends CrudRepository<AnimalTypeEntity, I
     List<AnimalTypeEntity> findAll();
 
     Optional<AnimalTypeEntity> findById(Integer id);
+
+    void deleteById(Integer id);
 }

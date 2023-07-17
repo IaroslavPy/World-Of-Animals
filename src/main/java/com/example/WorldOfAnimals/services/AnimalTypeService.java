@@ -32,4 +32,8 @@ public class AnimalTypeService {
                 ResponseEntity.ok().body(value)).orElseGet(() ->
                 ResponseEntity.notFound().build());
     }
+
+    public void deleteAnimalTypeById(Integer id) {
+        repository.deleteById(id);
+    }
 }
