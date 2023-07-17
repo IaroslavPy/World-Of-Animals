@@ -15,13 +15,17 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AnimalTypeService {
 
- private AnimalTypeRepository repository;
+    private AnimalTypeRepository repository;
 
- public List<AnimalTypeEntity> getAnimalsType() {
-     return new ArrayList<>(repository.findAll());
+    public AnimalTypeEntity saveOrUpdate(AnimalTypeEntity animalType) {
+        return repository.save(animalType);
     }
 
-    public ResponseEntity<AnimalTypeEntity> getAnimalTypeById(Integer id){
+    public List<AnimalTypeEntity> getAnimalsType() {
+        return new ArrayList<>(repository.findAll());
+    }
+
+    public ResponseEntity<AnimalTypeEntity> getAnimalTypeById(Integer id) {
         Optional<AnimalTypeEntity> animalType = repository.findById(id);
 
         return animalType.map(value ->
