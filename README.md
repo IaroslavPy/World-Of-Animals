@@ -15,6 +15,7 @@ POST http://localhost:9721/api/animalTypes
 "name": "Snake"
 }
 
+PUT  http://localhost:9721/api/animalTypes
 {
 "id": 2,
 "name": "Cat"
