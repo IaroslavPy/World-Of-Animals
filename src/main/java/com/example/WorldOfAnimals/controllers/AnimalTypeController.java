@@ -25,8 +25,7 @@ public class AnimalTypeController {
     private final AnimalTypeService service;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public AnimalTypeEntity saveUser(@RequestBody AnimalTypeEntity animalType) {
+    public AnimalTypeEntity saveAnimalType(@RequestBody AnimalTypeEntity animalType) {
         return service.saveOrUpdate(animalType);
     }
 
@@ -41,8 +40,7 @@ public class AnimalTypeController {
     }
 
     @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public AnimalTypeEntity updateUser(@RequestBody AnimalTypeEntity animalType) {
+    public AnimalTypeEntity updateAnimalType(@RequestBody AnimalTypeEntity animalType) {
         return service.saveOrUpdate(animalType);
     }
 
