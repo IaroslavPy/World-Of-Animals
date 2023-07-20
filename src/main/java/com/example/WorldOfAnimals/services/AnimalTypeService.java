@@ -1,6 +1,7 @@
 package com.example.WorldOfAnimals.services;
 
 
+import com.example.WorldOfAnimals.exceptions.AnimalTypeNotFoundException;
 import com.example.WorldOfAnimals.models.AnimalTypeEntity;
 import com.example.WorldOfAnimals.repositories.AnimalTypeRepository;
 import lombok.AllArgsConstructor;
@@ -25,12 +26,10 @@ public class AnimalTypeService {
         return new ArrayList<>(repository.findAll());
     }
 
-    public ResponseEntity<AnimalTypeEntity> getAnimalTypeById(Integer id) {
-        Optional<AnimalTypeEntity> animalType = repository.findById(id);
-
-        return animalType.map(value ->
-                ResponseEntity.ok().body(value)).orElseGet(() ->
-                ResponseEntity.notFound().build());
+    public AnimalTypeEntity getAnimalTypeById(Integer id) {
+        return repository.findById(id).orElseThrow(() ->
+                new AnimalTypeNotFoundException("Animal type with ID "
+                        + id + " not found!"));
     }
 
     public void deleteAnimalTypeById(Integer id) {
