@@ -36,9 +36,14 @@ public class AnimalTypeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AnimalTypeEntity>> getAnimalTypes() {
-
-        return ResponseEntity.ok(service.getAnimalsType());
+    public ResponseEntity<List<AnimalTypeDTO>> getAnimalTypes() {
+        List<AnimalTypeEntity> animalTypeEntitiesList = service.getAnimalsType();
+        List<AnimalTypeDTO> animalTypeDTOList = animalTypeEntitiesList.stream()
+                .map(entity -> {
+                    return new AnimalTypeDTO(entity.getId(), entity.getName());
+                })
+                .toList();
+        return ResponseEntity.ok(animalTypeDTOList);
     }
 
     @GetMapping("/{id}")
