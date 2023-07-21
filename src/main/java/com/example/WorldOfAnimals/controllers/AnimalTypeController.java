@@ -37,6 +37,7 @@ public class AnimalTypeController {
 
     @GetMapping
     public ResponseEntity<List<AnimalTypeEntity>> getAnimalTypes() {
+
         return ResponseEntity.ok(service.getAnimalsType());
     }
 
@@ -52,7 +53,9 @@ public class AnimalTypeController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updateAnimalType(@RequestBody AnimalTypeEntity animalType) {
+    public void updateAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
+        animalType.setId(animalTypeDTO.getId());
+        animalType.setName(animalTypeDTO.getName());
         service.saveOrUpdate(animalType);
     }
 
