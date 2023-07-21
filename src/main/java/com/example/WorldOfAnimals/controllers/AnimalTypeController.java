@@ -1,5 +1,6 @@
 package com.example.WorldOfAnimals.controllers;
 
+import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalTypeNotFoundException;
 import com.example.WorldOfAnimals.models.AnimalTypeEntity;
 import com.example.WorldOfAnimals.services.AnimalTypeService;
@@ -24,10 +25,13 @@ import java.util.List;
 public class AnimalTypeController {
 
     private final AnimalTypeService service;
+    private AnimalTypeEntity animalType;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveAnimalType(@RequestBody AnimalTypeEntity animalType) {
+    public void saveAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
+        animalType.setId(animalTypeDTO.getId());
+        animalType.setName(animalTypeDTO.getName());
         service.saveOrUpdate(animalType);
     }
 

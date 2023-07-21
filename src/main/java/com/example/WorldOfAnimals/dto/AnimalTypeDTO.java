@@ -1,4 +1,4 @@
-package com.example.WorldOfAnimals.models;
+package com.example.WorldOfAnimals.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,21 +10,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "animal_types")
-@Component
-public class AnimalTypeEntity {
+public class AnimalTypeDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column (name = "name", nullable = false, unique = true)
     private String name;
 }
