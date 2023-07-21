@@ -42,10 +42,12 @@ public class AnimalTypeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnimalTypeEntity> getAnimalTypeById(@PathVariable("id") Integer id) {
+    public ResponseEntity<AnimalTypeDTO> getAnimalTypeById(@PathVariable("id") Integer id) {
         try {
-            AnimalTypeEntity animalType = service.getAnimalTypeById(id);
-            return ResponseEntity.ok(animalType);
+            animalType = service.getAnimalTypeById(id);
+            AnimalTypeDTO animalTypeDTO =
+                    new AnimalTypeDTO(animalType.getId(), animalType.getName());
+            return ResponseEntity.ok(animalTypeDTO);
         } catch (AnimalTypeNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
