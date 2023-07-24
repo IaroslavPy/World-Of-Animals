@@ -21,4 +21,9 @@ public class AnimalBreedService {
     public List<AnimalBreedEntity> getAnimalsBreeds(){
         return new ArrayList<>(repository.findAll());
     }
+
+
+    public void deleteByID(Integer id){
+        repository.deleteById(id);
+    }
 }
