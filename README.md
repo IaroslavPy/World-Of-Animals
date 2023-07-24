@@ -32,7 +32,7 @@ AnimalBreeds
 
 GET http://localhost:9721/api/animalBreeds
 
-GET http://localhost:9721/api/animalBreeds/5
+GET http://localhost:9721/api/animalBreeds/page?pageNo=0&size=3
 
 POST http://localhost:9721/api/animalBreeds
 
