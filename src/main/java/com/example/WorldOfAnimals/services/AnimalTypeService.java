@@ -1,11 +1,13 @@
 package com.example.WorldOfAnimals.services;
 
 
+import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalTypeNotFoundException;
-import com.example.WorldOfAnimals.models.AnimalTypeEntity;
+import com.example.WorldOfAnimals.mapper.AnimalTypeMapper;
 import com.example.WorldOfAnimals.repositories.AnimalTypeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +17,21 @@ import java.util.List;
 public class AnimalTypeService {
 
     private AnimalTypeRepository repository;
+    private AnimalTypeMapper mapper;
 
-    public AnimalTypeEntity saveOrUpdate(AnimalTypeEntity animalType) {
-        return repository.save(animalType);
+    public void saveOrUpdate(AnimalTypeDTO animalTypeDTO) {
+        repository.save(mapper.convertToEntity(animalTypeDTO));
     }
 
-    public List<AnimalTypeEntity> getAnimalsType() {
-        return new ArrayList<>(repository.findAll());
+    public List<AnimalTypeDTO> getAnimalsType() {
+        return mapper.convertToDTOs(new ArrayList<>(repository.findAll()));
     }
 
-    public AnimalTypeEntity getAnimalTypeById(Integer id) {
-        return repository.findById(id).orElseThrow(() ->
+    @Transactional
+    public AnimalTypeDTO getAnimalTypeById(Integer id) {
+        return mapper.convertToDTO(repository.findById(id).orElseThrow(() ->
                 new AnimalTypeNotFoundException("Animal type with ID "
-                        + id + " not found!"));
+                        + id + " not found!")));
     }
 
     public void deleteAnimalTypeById(Integer id) {
