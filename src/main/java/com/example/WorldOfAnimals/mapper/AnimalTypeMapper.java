@@ -1,6 +1,7 @@
 package com.example.WorldOfAnimals.mapper;
 
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
+import com.example.WorldOfAnimals.dto.AnimalTypeRequestDTO;
 import com.example.WorldOfAnimals.models.AnimalTypeEntity;
 import org.springframework.stereotype.Component;
 
@@ -21,5 +22,11 @@ public class AnimalTypeMapper {
 
     public AnimalTypeEntity convertToEntity(AnimalTypeDTO animalTypeDTO){
         return new AnimalTypeEntity(animalTypeDTO.getId(), animalTypeDTO.getName());
+    }
+
+    public AnimalTypeEntity convertToEntityPost(AnimalTypeRequestDTO animalTypeRequestDTO){
+        AnimalTypeEntity animalType = new AnimalTypeEntity();
+        animalType.setName(animalTypeRequestDTO.getName());
+        return animalType;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.WorldOfAnimals.controllers;
 
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
+import com.example.WorldOfAnimals.dto.AnimalTypeRequestDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalTypeNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalTypeService;
 import lombok.AllArgsConstructor;
@@ -27,8 +28,8 @@ public class AnimalTypeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
-        service.saveOrUpdate(animalTypeDTO);
+    public void saveAnimalType(@RequestBody AnimalTypeRequestDTO animalTypeRequestDTO) {
+        service.saveAnimalType(animalTypeRequestDTO);
     }
 
     @GetMapping
@@ -48,7 +49,7 @@ public class AnimalTypeController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
-        service.saveOrUpdate(animalTypeDTO);
+        service.updateAnimalType(animalTypeDTO);
     }
 
     @DeleteMapping("/{id}")
