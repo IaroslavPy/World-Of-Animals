@@ -9,9 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnimalTypeDTO {
+public class AnimalTypeRequestDTO {
 
-    private Integer id;
-
-    private String name;
+    String name;
 }

@@ -1,8 +1,8 @@
 package com.example.WorldOfAnimals.controllers;
 
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
+import com.example.WorldOfAnimals.dto.AnimalTypeRequestDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalTypeNotFoundException;
-import com.example.WorldOfAnimals.models.AnimalTypeEntity;
 import com.example.WorldOfAnimals.services.AnimalTypeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,34 +25,22 @@ import java.util.List;
 public class AnimalTypeController {
 
     private final AnimalTypeService service;
-    private AnimalTypeEntity animalType;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
-        animalType.setId(animalTypeDTO.getId());
-        animalType.setName(animalTypeDTO.getName());
-        service.saveOrUpdate(animalType);
+    public void saveAnimalType(@RequestBody AnimalTypeRequestDTO animalTypeRequestDTO) {
+        service.saveAnimalType(animalTypeRequestDTO);
     }
 
     @GetMapping
     public ResponseEntity<List<AnimalTypeDTO>> getAnimalTypes() {
-        List<AnimalTypeEntity> animalTypeEntitiesList = service.getAnimalsType();
-        List<AnimalTypeDTO> animalTypeDTOList = animalTypeEntitiesList.stream()
-                .map(entity -> {
-                    return new AnimalTypeDTO(entity.getId(), entity.getName());
-                })
-                .toList();
-        return ResponseEntity.ok(animalTypeDTOList);
+        return ResponseEntity.ok(service.getAnimalsType());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AnimalTypeDTO> getAnimalTypeById(@PathVariable("id") Integer id) {
         try {
-            animalType = service.getAnimalTypeById(id);
-            AnimalTypeDTO animalTypeDTO =
-                    new AnimalTypeDTO(animalType.getId(), animalType.getName());
-            return ResponseEntity.ok(animalTypeDTO);
+            return ResponseEntity.ok(service.getAnimalTypeById(id));
         } catch (AnimalTypeNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
@@ -61,9 +49,7 @@ public class AnimalTypeController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
-        animalType.setId(animalTypeDTO.getId());
-        animalType.setName(animalTypeDTO.getName());
-        service.saveOrUpdate(animalType);
+        service.updateAnimalType(animalTypeDTO);
     }
 
     @DeleteMapping("/{id}")

@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Entity
 @Table(name = "animal_types")
-@Component
 public class AnimalTypeEntity {
 
     @Id
