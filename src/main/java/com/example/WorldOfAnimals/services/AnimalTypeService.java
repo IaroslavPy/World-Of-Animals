@@ -19,10 +19,12 @@ public class AnimalTypeService {
     private AnimalTypeRepository repository;
     private AnimalTypeMapper mapper;
 
+    @Transactional
     public void saveOrUpdate(AnimalTypeDTO animalTypeDTO) {
         repository.save(mapper.convertToEntity(animalTypeDTO));
     }
 
+    @Transactional
     public List<AnimalTypeDTO> getAnimalsType() {
         return mapper.convertToDTOs(new ArrayList<>(repository.findAll()));
     }
