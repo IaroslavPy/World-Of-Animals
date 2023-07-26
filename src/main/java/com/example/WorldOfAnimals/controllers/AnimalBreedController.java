@@ -1,5 +1,6 @@
 package com.example.WorldOfAnimals.controllers;
 
+import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
 import com.example.WorldOfAnimals.models.AnimalBreedEntity;
 import com.example.WorldOfAnimals.services.AnimalBreedService;
 import lombok.AllArgsConstructor;
@@ -26,8 +27,8 @@ public class AnimalBreedController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createBreed(@RequestBody AnimalBreedEntity animalBreed) {
-        service.saveOrUpdate(animalBreed);
+    public void createBreed(@RequestBody AnimalBreedRequestDTO breedRequestDTO) {
+        service.save(breedRequestDTO);
     }
 
     @GetMapping
