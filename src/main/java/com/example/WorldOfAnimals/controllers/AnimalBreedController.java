@@ -1,7 +1,7 @@
 package com.example.WorldOfAnimals.controllers;
 
+import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
-import com.example.WorldOfAnimals.models.AnimalBreedEntity;
 import com.example.WorldOfAnimals.services.AnimalBreedService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,12 +32,12 @@ public class AnimalBreedController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AnimalBreedEntity>> getBreeds() {
+    public ResponseEntity<List<AnimalBreedDTO>> getBreeds() {
         return ResponseEntity.ok(service.getAnimalsBreeds());
     }
 
     @GetMapping("/page")
-    public ResponseEntity<List<AnimalBreedEntity>> getAnimalsBreedsPage(
+    public ResponseEntity<List<AnimalBreedDTO>> getAnimalsBreedsPage(
             @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
             @RequestParam(value = "size", defaultValue = "1") Integer size) {
         return ResponseEntity.ok(service.getAnimalsBreedsPage(pageNo, size));

@@ -1,5 +1,6 @@
 package com.example.WorldOfAnimals.services;
 
+import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
 import com.example.WorldOfAnimals.mapper.AnimalBreedMapper;
 import com.example.WorldOfAnimals.models.AnimalBreedEntity;
@@ -26,14 +27,16 @@ public class AnimalBreedService {
         repository.save(animalBreed);
     }
 
-    public List<AnimalBreedEntity> getAnimalsBreeds() {
-        return new ArrayList<>(repository.findAll());
+    @Transactional
+    public List<AnimalBreedDTO> getAnimalsBreeds() {
+        return new ArrayList<>(mapper.convertToDTOs(repository.findAll()));
     }
 
-    public List<AnimalBreedEntity> getAnimalsBreedsPage(Integer pageNo, Integer size) {
+    @Transactional
+    public List<AnimalBreedDTO> getAnimalsBreedsPage(Integer pageNo, Integer size) {
         PageRequest page = PageRequest.of(pageNo, size);
         Page<AnimalBreedEntity> pageResult = repository.findAll(page);
-        return pageResult.getContent();
+        return mapper.convertToDTOs(pageResult.getContent());
     }
 
     public void deleteByID(Integer id) {

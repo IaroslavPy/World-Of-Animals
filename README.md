@@ -38,7 +38,7 @@ POST http://localhost:9721/api/animalBreeds
 
 {
 "name": "Welsh terrier",
-"type": {
+"animalType": {
         "id": 1,
         "name": "Dog"
         }
@@ -46,17 +46,10 @@ POST http://localhost:9721/api/animalBreeds
 
 {
 "name": "Bengal",
-"type": {
+"animalType": {
         "id": 2,
         "name": "Cat"
         }
 }
 
-
-PUT  http://localhost:9721/api/animalBreeds
-{
-"id": 2,
-"name": "Cat"
-}
-
-DELETE http://localhost:9721/api/animalTypes/6
+DELETE http://localhost:9721/api/animalBreeds/6
