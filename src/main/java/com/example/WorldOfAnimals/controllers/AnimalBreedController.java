@@ -2,7 +2,12 @@ package com.example.WorldOfAnimals.controllers;
 
 import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
+import com.example.WorldOfAnimals.dto.AnimalBreedResourceDTO;
 import com.example.WorldOfAnimals.services.AnimalBreedService;
+import com.example.WorldOfAnimals.utils.Constants;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/animalBreeds")
@@ -24,6 +31,11 @@ import java.util.List;
 public class AnimalBreedController {
 
     private AnimalBreedService service;
+
+    @PostConstruct
+    public void getBreedsFromResources() {
+        service.saveBreeds();
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
