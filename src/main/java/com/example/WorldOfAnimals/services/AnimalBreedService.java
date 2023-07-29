@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +29,7 @@ public class AnimalBreedService {
     private AnimalBreedMapper mapper;
 
     @Transactional
-    public void saveBreeds(){
+    public void saveBreeds() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(Constants.RESOURCE_URL, String.class);
         String json = response.getBody();
@@ -38,7 +38,15 @@ public class AnimalBreedService {
 
         try {
             AnimalBreedResourceDTO animalBreedRequestDTO = objectMapper.readValue(json, AnimalBreedResourceDTO.class);
-            mapper.convertToEntities(animalBreedRequestDTO);
+            List<AnimalBreedEntity> animalBreedsListFromResource = mapper.convertToEntities(animalBreedRequestDTO);
+            List<AnimalBreedEntity> animalBreedsListFromBD = repository.findAll();
+            List<AnimalBreedEntity> animalBreedsListResult = animalBreedsListFromResource.stream()
+                    .filter(resourceBreed -> animalBreedsListFromBD.stream()
+                            .noneMatch(bd -> bd.getName().equals(resourceBreed.getName())))
+                    .collect(Collectors.toList());
+            if (animalBreedsListResult.size() != 0) {
+                repository.saveAll(animalBreedsListResult);
+            }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
