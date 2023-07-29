@@ -48,7 +48,7 @@ public class AnimalBreedService {
                 repository.saveAll(animalBreedsListResult);
             }
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.getMessage();
         }
     }
 
