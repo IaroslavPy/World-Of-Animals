@@ -1,6 +1,6 @@
 package com.example.WorldOfAnimals.dto;
 
-import com.example.WorldOfAnimals.models.AnimalTypeEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +16,6 @@ public class AnimalBreedDTO {
 
     private String name;
 
-    private AnimalTypeEntity animalType;
+    @JsonProperty(value = "animalType")
+    private AnimalTypeDTO animalTypeDTO;
 }
