@@ -8,23 +8,23 @@ GET http://localhost:9721/api/animals/WOLF1 - wrong
 
 AnimalTypes
 
-GET http://localhost:9721/api/animalTypes
+GET http://localhost:9721/api/animals/types
 
-GET http://localhost:9721/api/animalTypes/5
+GET http://localhost:9721/api/animals/types/5
 
-POST http://localhost:9721/api/animalTypes 
+POST http://localhost:9721/api/animals/types 
 
 {
 "name": "Snake"
 }
 
-PUT  http://localhost:9721/api/animalTypes
+PUT  http://localhost:9721/api/animals/types
 {
 "id": 2,
 "name": "Cat"
 }
 
-DELETE http://localhost:9721/api/animalTypes/6
+DELETE http://localhost:9721/api/animals/types/6
 
 
 
