@@ -30,11 +30,11 @@ DELETE http://localhost:9721/api/animalTypes/6
 
 AnimalBreeds
 
-GET http://localhost:9721/api/animalBreeds
+GET http://localhost:9721/api/animals/breeds
 
-GET http://localhost:9721/api/animalBreeds/page?pageNo=0&size=3
+GET http://localhost:9721/api/animals/breeds/page?pageNo=0&size=3
 
-POST http://localhost:9721/api/animalBreeds
+POST http://localhost:9721/api/animals/breeds
 
 {
 "name": "Welsh terrier",
