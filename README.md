@@ -8,48 +8,48 @@ GET http://localhost:9721/api/animals/WOLF1 - wrong
 
 AnimalTypes
 
-GET http://localhost:9721/api/animalTypes
+GET http://localhost:9721/api/animals/types
 
-GET http://localhost:9721/api/animalTypes/5
+GET http://localhost:9721/api/animals/types/5
 
-POST http://localhost:9721/api/animalTypes 
+POST http://localhost:9721/api/animals/types
 
 {
 "name": "Snake"
 }
 
-PUT  http://localhost:9721/api/animalTypes
+PUT  http://localhost:9721/api/animals/types
 {
 "id": 2,
 "name": "Cat"
 }
 
-DELETE http://localhost:9721/api/animalTypes/6
+DELETE http://localhost:9721/api/animals/types/6
 
 
 
 AnimalBreeds
 
-GET http://localhost:9721/api/animalBreeds
+GET http://localhost:9721/api/animals/breeds
 
-GET http://localhost:9721/api/animalBreeds/page?pageNo=0&size=3
+GET http://localhost:9721/api/animals/breeds/page?pageNo=0&size=3
 
-POST http://localhost:9721/api/animalBreeds
+POST http://localhost:9721/api/animals/breeds
 
 {
 "name": "Welsh terrier",
 "animalType": {
-        "id": 1,
-        "name": "Dog"
-        }
+"id": 1,
+"name": "Dog"
+}
 }
 
 {
 "name": "Bengal",
 "animalType": {
-        "id": 2,
-        "name": "Cat"
-        }
+"id": 2,
+"name": "Cat"
+}
 }
 
-DELETE http://localhost:9721/api/animalBreeds/6
+DELETE http://localhost:9721/api/animals/breeds/6
