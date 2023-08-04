@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/animalTypes")
+@RequestMapping("/animals/types")
 @AllArgsConstructor
 public class AnimalTypeController {
 
