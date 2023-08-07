@@ -27,14 +27,13 @@ public class AnimalBreedService {
 
     private AnimalBreedRepository repository;
     private AnimalBreedMapper mapper;
+    private ObjectMapper objectMapper;
 
     @Transactional
     public void loadBreeds() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(Constants.RESOURCE_URL, String.class);
         String json = response.getBody();
-
-        ObjectMapper objectMapper = new ObjectMapper();
 
         try {
             AnimalBreedResourceDTO animalBreedRequestDTO = objectMapper.readValue(json, AnimalBreedResourceDTO.class);
