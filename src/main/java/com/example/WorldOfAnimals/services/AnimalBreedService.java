@@ -29,7 +29,7 @@ public class AnimalBreedService {
     private AnimalBreedMapper mapper;
 
     @Transactional
-    public void saveBreeds() {
+    public void loadBreeds() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(Constants.RESOURCE_URL, String.class);
         String json = response.getBody();

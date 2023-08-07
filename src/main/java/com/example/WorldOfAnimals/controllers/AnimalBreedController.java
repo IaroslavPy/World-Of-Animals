@@ -30,7 +30,7 @@ public class AnimalBreedController {
     @PostConstruct
     @Scheduled(fixedRate = 86400000)
     public void getBreedsFromResources() {
-        service.saveBreeds();
+        service.loadBreeds();
     }
 
     @PostMapping
