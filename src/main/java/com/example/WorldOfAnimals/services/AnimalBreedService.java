@@ -6,7 +6,6 @@ import com.example.WorldOfAnimals.dto.AnimalBreedResourceDTO;
 import com.example.WorldOfAnimals.mapper.AnimalBreedMapper;
 import com.example.WorldOfAnimals.models.AnimalBreedEntity;
 import com.example.WorldOfAnimals.repositories.AnimalBreedRepository;
-import com.example.WorldOfAnimals.utils.Constants;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -28,11 +27,11 @@ public class AnimalBreedService {
     private AnimalBreedRepository repository;
     private AnimalBreedMapper mapper;
     private ObjectMapper objectMapper;
+    private RestTemplate restTemplate;
 
     @Transactional
     public void loadBreeds() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(Constants.RESOURCE_URL, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/breeds/list/all", String.class);
         String json = response.getBody();
 
         try {
