@@ -3,11 +3,9 @@ package com.example.WorldOfAnimals.controllers;
 import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
 import com.example.WorldOfAnimals.services.AnimalBreedService;
-import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +24,6 @@ import java.util.List;
 public class AnimalBreedController {
 
     private AnimalBreedService service;
-
-    @PostConstruct
-    @Scheduled(fixedRate = 86400000)
-    public void getBreedsFromResources() {
-        service.loadBreeds();
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
