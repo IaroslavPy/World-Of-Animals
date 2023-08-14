@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Table(name = "animals")
-public class Animal {
+public class AnimalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
