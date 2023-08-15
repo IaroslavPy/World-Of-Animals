@@ -68,6 +68,7 @@ public class AnimalBreedService {
         return mapper.convertToDTOs(pageResult.getContent());
     }
 
+    @Transactional
     public void deleteByID(Integer id) {
         repository.deleteById(id);
     }

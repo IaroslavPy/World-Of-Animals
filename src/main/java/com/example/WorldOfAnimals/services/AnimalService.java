@@ -31,4 +31,9 @@ public class AnimalService {
        return mapper.convertToDTOs(repository.findAll());
     }
 
+    @Transactional
+    void deleteAnimalById(Long id){
+       repository.findById(id);
+    }
+
 }

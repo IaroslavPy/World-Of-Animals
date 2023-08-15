@@ -42,6 +42,7 @@ public class AnimalTypeService {
         repository.save(mapper.convertToEntity(animalTypeDTO));
     }
 
+    @Transactional
     public void deleteAnimalTypeById(Integer id) {
         repository.deleteById(id);
     }
