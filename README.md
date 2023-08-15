@@ -54,3 +54,28 @@ POST http://localhost:9721/api/animals/breeds
 
 DELETE http://localhost:9721/api/animals/breeds/6
 
+
+Animals
+
+GET http://localhost:9721/api/animals/animals/2
+
+
+{
+    "id": 2,
+    "name": "Clark",
+    "description": "Free dog",
+    "animalTypeEntity": {
+        "id": 1,
+        "name": "Dog"
+    },
+    "animalBreedEntity": {
+        "id": 1011,
+        "name": "african",
+        "type": {
+            "id": 1,
+            "name": "Dog"
+        }
+    },
+    "created": "2023-08-14T13:28:13.000+00:00",
+    "updated": "2023-08-14T13:28:13.000+00:00"
+}
