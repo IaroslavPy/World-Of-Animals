@@ -57,8 +57,9 @@ DELETE http://localhost:9721/api/animals/breeds/6
 
 Animals
 
-GET http://localhost:9721/api/animals/animals/2
+GET http://localhost:9721/api/animals/animals
 
+GET http://localhost:9721/api/animals/animals/2
 
 {
     "id": 2,
