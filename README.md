@@ -61,6 +61,9 @@ GET http://localhost:9721/api/animals/animals
 
 GET http://localhost:9721/api/animals/animals/2
 
+
+
+DELETE http://localhost:9721/api/animals/animals/2
 {
     "id": 2,
     "name": "Clark",
@@ -80,3 +83,5 @@ GET http://localhost:9721/api/animals/animals/2
     "created": "2023-08-14T13:28:13.000+00:00",
     "updated": "2023-08-14T13:28:13.000+00:00"
 }
+
+

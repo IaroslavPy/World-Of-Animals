@@ -3,7 +3,6 @@ package com.example.WorldOfAnimals.services;
 import com.example.WorldOfAnimals.dto.AnimalDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.mapper.AnimalMapper;
-import com.example.WorldOfAnimals.models.AnimalEntity;
 import com.example.WorldOfAnimals.repositories.AnimalRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,8 +31,8 @@ public class AnimalService {
     }
 
     @Transactional
-    void deleteAnimalById(Long id){
-       repository.findById(id);
+    public void deleteAnimalById(Long id){
+       repository.deleteById(id);
     }
 
 }
