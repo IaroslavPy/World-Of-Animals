@@ -61,9 +61,6 @@ GET http://localhost:9721/api/animals/animals
 
 GET http://localhost:9721/api/animals/animals/2
 
-
-
-DELETE http://localhost:9721/api/animals/animals/2
 {
     "id": 2,
     "name": "Clark",
@@ -85,3 +82,23 @@ DELETE http://localhost:9721/api/animals/animals/2
 }
 
 
+POST http://localhost:9721/api/animals/animals
+
+{
+     "name": "Sisiзззззззз",
+     "description": "Sisi dogрллрлрлрллрллр",
+     "animalType": {
+        "id": 1,
+        "name": "Dog"
+        },
+     "animalBreed": {
+       "id": 1011,
+       "name": "african",
+       "animalType": {
+           "id": 1,
+           "name": "Dog"
+            }
+       }
+}
+
+DELETE http://localhost:9721/api/animals/animals/2

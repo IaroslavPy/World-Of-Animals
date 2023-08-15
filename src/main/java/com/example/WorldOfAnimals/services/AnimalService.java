@@ -1,6 +1,7 @@
 package com.example.WorldOfAnimals.services;
 
 import com.example.WorldOfAnimals.dto.AnimalDTO;
+import com.example.WorldOfAnimals.dto.AnimalRequestDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.mapper.AnimalMapper;
 import com.example.WorldOfAnimals.repositories.AnimalRepository;
@@ -16,6 +17,12 @@ public class AnimalService {
 
    private final AnimalRepository repository;
     private final AnimalMapper mapper;
+
+
+    @Transactional
+    public void saveAnimal(AnimalRequestDTO animalRequestDTO){
+        repository.save(mapper.convertToEntityPost(animalRequestDTO));
+    }
 
 
    @Transactional

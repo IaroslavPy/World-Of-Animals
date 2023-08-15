@@ -2,10 +2,14 @@ package com.example.WorldOfAnimals.mapper;
 
 import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalDTO;
+import com.example.WorldOfAnimals.dto.AnimalRequestDTO;
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
+import com.example.WorldOfAnimals.models.AnimalBreedEntity;
 import com.example.WorldOfAnimals.models.AnimalEntity;
+import com.example.WorldOfAnimals.models.AnimalTypeEntity;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -29,5 +33,20 @@ public class AnimalMapper {
             return new AnimalDTO(entity.getId(), entity.getName(), entity.getDescription(),
                     animalTypeDTO, animalBreedDTO, entity.getCreated(), entity.getUpdated());
         }).toList();
+    }
+
+    public AnimalEntity convertToEntityPost(AnimalRequestDTO animalRequestDTO) {
+        AnimalTypeEntity animalType = new AnimalTypeEntity(animalRequestDTO.getAnimalTypeDTO().getId(),
+                animalRequestDTO.getAnimalTypeDTO().getName());
+        AnimalBreedEntity animalBreed = new AnimalBreedEntity(animalRequestDTO.getAnimalBreedDTO().getId(),
+                animalRequestDTO.getAnimalBreedDTO().getName(), animalType);
+        AnimalEntity animalEntity = new AnimalEntity();
+        animalEntity.setName(animalRequestDTO.getName());
+        animalEntity.setDescription(animalRequestDTO.getDescription());
+        animalEntity.setAnimalTypeEntity(animalType);
+        animalEntity.setAnimalBreedEntity(animalBreed);
+        animalEntity.setCreated(new Timestamp(System.currentTimeMillis()));
+        animalEntity.setUpdated(new Timestamp(System.currentTimeMillis()));
+        return animalEntity;
     }
 }
