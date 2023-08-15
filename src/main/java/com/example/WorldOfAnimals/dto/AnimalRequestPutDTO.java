@@ -10,7 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AnimalRequestDTO {
+public class AnimalRequestPutDTO {
+
+    private Long id;
 
     private String name;
 

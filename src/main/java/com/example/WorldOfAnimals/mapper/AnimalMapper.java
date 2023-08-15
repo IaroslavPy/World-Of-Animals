@@ -3,6 +3,7 @@ package com.example.WorldOfAnimals.mapper;
 import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalDTO;
 import com.example.WorldOfAnimals.dto.AnimalRequestDTO;
+import com.example.WorldOfAnimals.dto.AnimalRequestPutDTO;
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
 import com.example.WorldOfAnimals.models.AnimalBreedEntity;
 import com.example.WorldOfAnimals.models.AnimalEntity;
@@ -46,6 +47,21 @@ public class AnimalMapper {
         animalEntity.setAnimalTypeEntity(animalType);
         animalEntity.setAnimalBreedEntity(animalBreed);
         animalEntity.setCreated(new Timestamp(System.currentTimeMillis()));
+        animalEntity.setUpdated(new Timestamp(System.currentTimeMillis()));
+        return animalEntity;
+    }
+
+    public AnimalEntity convertToEntityPut(AnimalRequestPutDTO animalRequestPutDTO) {
+        AnimalTypeEntity animalType = new AnimalTypeEntity(animalRequestPutDTO.getAnimalTypeDTO().getId(),
+                animalRequestPutDTO.getAnimalTypeDTO().getName());
+        AnimalBreedEntity animalBreed = new AnimalBreedEntity(animalRequestPutDTO.getAnimalBreedDTO().getId(),
+                animalRequestPutDTO.getAnimalBreedDTO().getName(), animalType);
+        AnimalEntity animalEntity = new AnimalEntity();
+        animalEntity.setId(animalRequestPutDTO.getId());
+        animalEntity.setName(animalRequestPutDTO.getName());
+        animalEntity.setDescription(animalRequestPutDTO.getDescription());
+        animalEntity.setAnimalTypeEntity(animalType);
+        animalEntity.setAnimalBreedEntity(animalBreed);
         animalEntity.setUpdated(new Timestamp(System.currentTimeMillis()));
         return animalEntity;
     }

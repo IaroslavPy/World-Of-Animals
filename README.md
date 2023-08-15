@@ -85,8 +85,8 @@ GET http://localhost:9721/api/animals/animals/2
 POST http://localhost:9721/api/animals/animals
 
 {
-     "name": "Sisiзззззззз",
-     "description": "Sisi dogрллрлрлрллрллр",
+     "name": "Tiger",
+     "description": "Tiger 5",
      "animalType": {
         "id": 1,
         "name": "Dog"
@@ -99,6 +99,27 @@ POST http://localhost:9721/api/animals/animals
            "name": "Dog"
             }
        }
+}
+
+
+PUT http://localhost:9721/api/animals/animals
+
+{
+    "id": 2,
+    "name": "Tiger Updated",
+    "description": "Tiger 5",
+    "animalType": {
+        "id": 1,
+        "name": "Dog"
+        },
+    "animalBreed": {
+        "id": 1011,
+        "name": "african",
+        "animalType": {
+            "id": 1,
+            "name": "Dog"
+        }
+    }
 }
 
 DELETE http://localhost:9721/api/animals/animals/2

@@ -1,6 +1,5 @@
 package com.example.WorldOfAnimals.repositories;
 
-import com.example.WorldOfAnimals.models.AnimalBreedEntity;
 import com.example.WorldOfAnimals.models.AnimalEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
