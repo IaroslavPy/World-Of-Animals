@@ -28,7 +28,7 @@ public class AnimalBreedEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToOne(targetEntity = AnimalTypeEntity.class, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn
     private AnimalTypeEntity type;
 }

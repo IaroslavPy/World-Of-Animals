@@ -33,11 +33,11 @@ public class AnimalEntity {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(targetEntity = AnimalTypeEntity.class, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "type_id")
     private AnimalTypeEntity animalTypeEntity;
 
-    @ManyToOne(targetEntity = AnimalBreedEntity.class, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "breed_id")
     private AnimalBreedEntity animalBreedEntity;
 
