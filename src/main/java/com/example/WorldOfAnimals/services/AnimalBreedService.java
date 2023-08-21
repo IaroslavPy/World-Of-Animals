@@ -56,12 +56,10 @@ public class AnimalBreedService {
         repository.save(animalBreed);
     }
 
-    @Transactional
     public List<AnimalBreedDTO> getAnimalsBreeds() {
         return new ArrayList<>(mapper.convertToDTOs(repository.findAll()));
     }
 
-    @Transactional
     public List<AnimalBreedDTO> getAnimalsBreedsPage(Integer pageNo, Integer size) {
         PageRequest page = PageRequest.of(pageNo, size);
         Page<AnimalBreedEntity> pageResult = repository.findAll(page);

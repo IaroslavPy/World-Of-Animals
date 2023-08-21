@@ -25,14 +25,12 @@ public class AnimalService {
         repository.save(mapper.convertToEntityPost(animalRequestDTO));
     }
 
-    @Transactional
     public AnimalDTO getAnimalById(Long id) {
         return mapper.convertToDTO(repository.findById(id).orElseThrow(() ->
                 new AnimalNotFoundException("Animal with ID " +
                         id + " not found!")));
     }
 
-    @Transactional
     public List<AnimalDTO> getAnimals() {
         return mapper.convertToDTOs(repository.findAll());
     }
