@@ -20,10 +20,8 @@ public class AnimalDTO {
 
     private String description;
 
-    @JsonProperty(value = "animalType")
     private AnimalTypeDTO animalTypeDTO;
 
-    @JsonProperty(value = "animalBreed")
     private AnimalBreedDTO animalBreedDTO;
 
     private Timestamp created;
