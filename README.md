@@ -1,10 +1,3 @@
-GET http://localhost:9721/api/animals  - right
-
-GET http://localhost:9721/api/animals/WOLF - right
-
-GET http://localhost:9721/api/animals/WOLF1 - wrong
-
-
 
 AnimalTypes
 
@@ -57,9 +50,9 @@ DELETE http://localhost:9721/api/animals/breeds/6
 
 Animals
 
-GET http://localhost:9721/api/animals/animals
+GET http://localhost:9721/api/animals
 
-GET http://localhost:9721/api/animals/animals/2
+GET http://localhost:9721/api/animals/2
 
 {
     "id": 2,
@@ -82,7 +75,7 @@ GET http://localhost:9721/api/animals/animals/2
 }
 
 
-POST http://localhost:9721/api/animals/animals
+POST http://localhost:9721/api/animals
 
 {
      "name": "Tiger",
@@ -102,7 +95,7 @@ POST http://localhost:9721/api/animals/animals
 }
 
 
-PUT http://localhost:9721/api/animals/animals
+PUT http://localhost:9721/api/animals
 
 {
     "id": 2,
@@ -122,4 +115,4 @@ PUT http://localhost:9721/api/animals/animals
     }
 }
 
-DELETE http://localhost:9721/api/animals/animals/2
+DELETE http://localhost:9721/api/animals/2
