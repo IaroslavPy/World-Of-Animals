@@ -34,10 +34,6 @@ public class AnimalEntity {
     private String description;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "type_id")
-    private AnimalTypeEntity animalTypeEntity;
-
-    @ManyToOne(optional = false)
     @JoinColumn(name = "breed_id")
     private AnimalBreedEntity animalBreedEntity;
 

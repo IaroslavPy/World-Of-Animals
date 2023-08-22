@@ -16,6 +16,5 @@ public class AnimalBreedDTO {
 
     private String name;
 
-    @JsonProperty(value = "animalType")
     private AnimalTypeDTO animalTypeDTO;
 }

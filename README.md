@@ -58,10 +58,6 @@ GET http://localhost:9721/api/animals/2
     "id": 2,
     "name": "Clark",
     "description": "Free dog",
-    "animalTypeEntity": {
-        "id": 1,
-        "name": "Dog"
-    },
     "animalBreedEntity": {
         "id": 1011,
         "name": "african",
@@ -78,20 +74,16 @@ GET http://localhost:9721/api/animals/2
 POST http://localhost:9721/api/animals
 
 {
-     "name": "Tiger",
-     "description": "Tiger 5",
-     "animalType": {
-        "id": 1,
-        "name": "Dog"
-        },
-     "animalBreed": {
-       "id": 1011,
-       "name": "african",
-       "animalType": {
-           "id": 1,
-           "name": "Dog"
-            }
-       }
+    "name": "Tiger",
+    "description": "Tiger 5",
+    "animalBreedDTO": {
+        "id": 1011,
+        "name": "african",
+        "animalTypeDTO": {
+            "id": 1,
+            "name": "Dog"
+        }
+    }
 }
 
 
@@ -101,14 +93,10 @@ PUT http://localhost:9721/api/animals
     "id": 2,
     "name": "Tiger Updated",
     "description": "Tiger 5",
-    "animalType": {
-        "id": 1,
-        "name": "Dog"
-        },
-    "animalBreed": {
+    "animalBreedDTO": {
         "id": 1011,
         "name": "african",
-        "animalType": {
+        "animalTypeDTO": {
             "id": 1,
             "name": "Dog"
         }
