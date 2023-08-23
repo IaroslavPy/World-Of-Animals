@@ -104,3 +104,19 @@ PUT http://localhost:9721/api/animals
 }
 
 DELETE http://localhost:9721/api/animals/2
+
+
+
+CREATE TABLE IF NOT EXISTS animal_images
+( id BIGINT NOT NULL AUTO_INCREMENT,
+animal_id BIGINT NOT NULL,
+file_path VARCHAR(256) NOT NULL,
+type ENUM('png', 'jpeg'),
+size BIGINT NOT NULL,
+created TIMESTAMP(0) NOT NULL,
+updated TIMESTAMP(0) NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (animal_id) REFERENCES animals(id)
+);
+
+
