@@ -1,16 +1,21 @@
 package com.example.WorldOfAnimals.services;
 
+import com.example.WorldOfAnimals.exceptions.AnimalImageNotFoundException;
 import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.models.AnimalEntity;
 import com.example.WorldOfAnimals.models.AnimalImageEntity;
 import com.example.WorldOfAnimals.repositories.AnimalImageRepository;
 import com.example.WorldOfAnimals.repositories.AnimalRepository;
 import com.example.WorldOfAnimals.utils.Constants;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
@@ -22,6 +27,7 @@ public class AnimalImageService {
     private final AnimalRepository animalRepository;
     private final AnimalImageRepository animalImageRepository;
 
+    @Transactional
     public void uploadImage(MultipartFile multipartFile) {
         try {
             Files.copy(multipartFile.getInputStream(), Paths.get(Constants.UPLOAD_IMAGES_PATH +
@@ -51,6 +57,20 @@ public class AnimalImageService {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public Resource getAnimalImageById(Long id) {
+        AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
+                new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
+        String path = animalImageEntity.getFilePath();
+        Resource resource = null;
+        try {
+            resource = new UrlResource(Paths.get(path).toUri());
+            return resource;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
