@@ -73,4 +73,16 @@ public class AnimalImageService {
             return null;
         }
     }
+
+    @Transactional
+    public void deleteAnimalById(Long id) {
+        AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
+                new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
+        try {
+            Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        animalImageRepository.deleteById(id);
+    }
 }

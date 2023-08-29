@@ -131,5 +131,5 @@ GET http://localhost:9721/api/animals/images/22
 
 
 
-
+DELETE http://localhost:9721/api/animals/images/12
 
