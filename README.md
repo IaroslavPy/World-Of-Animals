@@ -122,13 +122,17 @@ FOREIGN KEY (animal_id) REFERENCES animals(id)
 );
 
 
-POST http://localhost:9721/api/animals/images/upload
+POST http://localhost:9721/api/animals/images
 
 current file
 
 
 GET http://localhost:9721/api/animals/images/22
 
+
+PUT http://localhost:9721/api/animals/images/24
+
+current file
 
 
 DELETE http://localhost:9721/api/animals/images/12

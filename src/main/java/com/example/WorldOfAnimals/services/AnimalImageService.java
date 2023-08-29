@@ -28,7 +28,7 @@ public class AnimalImageService {
     private final AnimalImageRepository animalImageRepository;
 
     @Transactional
-    public void uploadImage(MultipartFile multipartFile) {
+    public void uploadAnimalImage(MultipartFile multipartFile) {
         try {
             Files.copy(multipartFile.getInputStream(), Paths.get(Constants.UPLOAD_IMAGES_PATH +
                     multipartFile.getOriginalFilename()));
@@ -75,7 +75,39 @@ public class AnimalImageService {
     }
 
     @Transactional
-    public void deleteAnimalById(Long id) {
+    public void updateAnimalImage(MultipartFile multipartFile, Long id) {
+        AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
+                new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
+        try {
+            Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            Files.copy(multipartFile.getInputStream(), Paths.get(Constants.UPLOAD_IMAGES_PATH +
+                    multipartFile.getOriginalFilename()));
+
+            animalImageEntity.setFilePath(Constants.UPLOAD_IMAGES_PATH + multipartFile.getOriginalFilename())
+                             .setFileType(multipartFile.getContentType().substring(6))
+                             .setFileSize(multipartFile.getSize())
+                             .setUpdated(new Timestamp(System.currentTimeMillis()));
+            try {
+                animalImageRepository.save(animalImageEntity);
+            } catch (RuntimeException e) {
+                try {
+                    Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional
+    public void deleteAnimalImageById(Long id) {
         AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
                 new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
         try {
