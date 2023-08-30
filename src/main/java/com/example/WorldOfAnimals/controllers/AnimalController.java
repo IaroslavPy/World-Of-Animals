@@ -49,7 +49,7 @@ public class AnimalController {
     }
 
     @PutMapping
-    public ResponseEntity<AnimalEntity> putAnimal(@RequestBody AnimalRequestPutDTO animalRequestPutDTO) {
+    public ResponseEntity<AnimalDTO> putAnimal(@RequestBody AnimalRequestPutDTO animalRequestPutDTO) {
         try {
             return ResponseEntity.ok(service.updateAnimal(animalRequestPutDTO));
         } catch (AnimalNotFoundException e) {
