@@ -1,10 +1,3 @@
-GET http://localhost:9721/api/animals  - right
-
-GET http://localhost:9721/api/animals/WOLF - right
-
-GET http://localhost:9721/api/animals/WOLF1 - wrong
-
-
 
 AnimalTypes
 
@@ -54,3 +47,60 @@ POST http://localhost:9721/api/animals/breeds
 
 DELETE http://localhost:9721/api/animals/breeds/6
 
+
+Animals
+
+GET http://localhost:9721/api/animals
+
+GET http://localhost:9721/api/animals/2
+
+{
+    "id": 2,
+    "name": "Clark",
+    "description": "Free dog",
+    "animalBreedEntity": {
+        "id": 1011,
+        "name": "african",
+        "type": {
+            "id": 1,
+            "name": "Dog"
+        }
+    },
+    "created": "2023-08-14T13:28:13.000+00:00",
+    "updated": "2023-08-14T13:28:13.000+00:00"
+}
+
+
+POST http://localhost:9721/api/animals
+
+{
+    "name": "Tiger",
+    "description": "Tiger 5",
+    "animalBreedDTO": {
+        "id": 1011,
+        "name": "african",
+        "animalTypeDTO": {
+            "id": 1,
+            "name": "Dog"
+        }
+    }
+}
+
+
+PUT http://localhost:9721/api/animals
+
+{
+    "id": 2,
+    "name": "Tiger Updated",
+    "description": "Tiger 5",
+    "animalBreedDTO": {
+        "id": 1011,
+        "name": "african",
+        "animalTypeDTO": {
+            "id": 1,
+            "name": "Dog"
+        }
+    }
+}
+
+DELETE http://localhost:9721/api/animals/2

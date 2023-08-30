@@ -6,15 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnimalBreedDTO {
+@Getter
+@Setter
+public class AnimalRequestPutDTO {
 
-    private Integer id;
+    private Long id;
 
     private String name;
 
-    private AnimalTypeDTO animalTypeDTO;
+    private String description;
+
+    private AnimalBreedDTO animalBreedDTO;
 }
+

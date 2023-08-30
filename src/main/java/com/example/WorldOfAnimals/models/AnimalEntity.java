@@ -13,22 +13,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.sql.Timestamp;
+
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "animal_breeds")
-public class AnimalBreedEntity {
+@Getter
+@Setter
+@Table(name = "animals")
+public class AnimalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne(optional = false)
-    @JoinColumn
-    private AnimalTypeEntity type;
+    @JoinColumn(name = "breed_id")
+    private AnimalBreedEntity animalBreedEntity;
+
+    @Column(name = "created", nullable = false)
+    private Timestamp created;
+
+    @Column(name = "updated", nullable = false)
+    private Timestamp updated;
 }
+
