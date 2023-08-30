@@ -36,13 +36,13 @@ public class AnimalService {
     }
 
     @Transactional
-    public AnimalEntity updateAnimal(AnimalRequestPutDTO animalRequestPutDTO) {
+    public AnimalDTO updateAnimal(AnimalRequestPutDTO animalRequestPutDTO) {
         AnimalEntity entityFromBD = repository.findById(animalRequestPutDTO.getId()).orElseThrow(() ->
                 new AnimalNotFoundException("Animal for update not found!"));
         AnimalEntity entityForUpdate = mapper.convertToEntityPut(animalRequestPutDTO);
         entityForUpdate.setCreated(entityFromBD.getCreated());
         repository.save(entityForUpdate);
-        return entityForUpdate;
+        return mapper.convertToDTO(entityForUpdate);
     }
 
     @Transactional
