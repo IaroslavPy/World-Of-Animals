@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,10 +26,12 @@ public class AnimalImageController {
 
     private final AnimalImageService service;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void uploadAnimalImage(@RequestParam("file") MultipartFile multipartFile) {
-        service.uploadAnimalImage(multipartFile);
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public void uploadAnimalImage(
+            @RequestParam("file") @NonNull MultipartFile file,
+            @RequestParam("request") @NonNull String request) {
+        service.uploadAnimalImage(request, file);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.IMAGE_JPEG_VALUE)

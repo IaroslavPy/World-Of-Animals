@@ -1,5 +1,6 @@
 package com.example.WorldOfAnimals.services;
 
+import com.example.WorldOfAnimals.dto.AnimalImageRequestDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalImageNotFoundException;
 import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.models.AnimalEntity;
@@ -7,6 +8,8 @@ import com.example.WorldOfAnimals.models.AnimalImageEntity;
 import com.example.WorldOfAnimals.repositories.AnimalImageRepository;
 import com.example.WorldOfAnimals.repositories.AnimalRepository;
 import com.example.WorldOfAnimals.utils.Constants;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -28,15 +31,22 @@ public class AnimalImageService {
     private final AnimalImageRepository animalImageRepository;
 
     @Transactional
-    public void uploadAnimalImage(MultipartFile multipartFile) {
+    public void uploadAnimalImage(String request, MultipartFile multipartFile) {
+
+        AnimalImageRequestDTO requestDTO = null;
+
+        try {
+            requestDTO = new ObjectMapper().readValue(request, AnimalImageRequestDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
         try {
             Files.copy(multipartFile.getInputStream(), Paths.get(Constants.UPLOAD_IMAGES_PATH +
                     multipartFile.getOriginalFilename()));
 
-            Long exampleId = 1L;
-            AnimalEntity exampleAnimal = animalRepository.findById(exampleId).orElseThrow(() ->
-                    new AnimalNotFoundException("Animal with ID " +
-                            exampleId + " not found!"));
+            AnimalEntity exampleAnimal = animalRepository.findById(requestDTO.getAnimalId()).orElseThrow(() ->
+                    new AnimalNotFoundException("Animal not found!"));
 
             AnimalImageEntity animalImage = new AnimalImageEntity()
                     .setAnimal(exampleAnimal)
@@ -89,9 +99,9 @@ public class AnimalImageService {
                     multipartFile.getOriginalFilename()));
 
             animalImageEntity.setFilePath(Constants.UPLOAD_IMAGES_PATH + multipartFile.getOriginalFilename())
-                             .setFileType(multipartFile.getContentType().substring(6))
-                             .setFileSize(multipartFile.getSize())
-                             .setUpdated(new Timestamp(System.currentTimeMillis()));
+                    .setFileType(multipartFile.getContentType().substring(6))
+                    .setFileSize(multipartFile.getSize())
+                    .setUpdated(new Timestamp(System.currentTimeMillis()));
             try {
                 animalImageRepository.save(animalImageEntity);
             } catch (RuntimeException e) {

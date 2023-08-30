@@ -126,6 +126,12 @@ POST http://localhost:9721/api/animals/images
 
 current file
 
+JSON (String format)
+
+{
+"animalId": 3
+}
+
 
 GET http://localhost:9721/api/animals/images/22
 
