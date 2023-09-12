@@ -29,6 +29,7 @@ public class AnimalImageService {
 
     private final AnimalRepository animalRepository;
     private final AnimalImageRepository animalImageRepository;
+    private final Constants constants;
 
     @Transactional
     public void uploadAnimalImage(String request, MultipartFile multipartFile) {
@@ -42,7 +43,7 @@ public class AnimalImageService {
         }
 
         try {
-            Files.copy(multipartFile.getInputStream(), Paths.get(Constants.UPLOAD_IMAGES_PATH +
+            Files.copy(multipartFile.getInputStream(), Paths.get(constants.UPLOAD_IMAGES_PATH +
                     multipartFile.getOriginalFilename()));
 
             AnimalEntity exampleAnimal = animalRepository.findById(requestDTO.getAnimalId()).orElseThrow(() ->
@@ -50,7 +51,7 @@ public class AnimalImageService {
 
             AnimalImageEntity animalImage = new AnimalImageEntity()
                     .setAnimal(exampleAnimal)
-                    .setFilePath(Constants.UPLOAD_IMAGES_PATH + multipartFile.getOriginalFilename())
+                    .setFilePath(constants.UPLOAD_IMAGES_PATH + multipartFile.getOriginalFilename())
                     .setFileType(multipartFile.getContentType().substring(6))
                     .setFileSize(multipartFile.getSize())
                     .setCreated(new Timestamp(System.currentTimeMillis()))
@@ -91,10 +92,10 @@ public class AnimalImageService {
 
         try {
             Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
-            Files.copy(multipartFile.getInputStream(), Paths.get(Constants.UPLOAD_IMAGES_PATH +
+            Files.copy(multipartFile.getInputStream(), Paths.get(constants.UPLOAD_IMAGES_PATH +
                     multipartFile.getOriginalFilename()));
 
-            animalImageEntity.setFilePath(Constants.UPLOAD_IMAGES_PATH + multipartFile.getOriginalFilename())
+            animalImageEntity.setFilePath(constants.UPLOAD_IMAGES_PATH + multipartFile.getOriginalFilename())
                     .setFileType(multipartFile.getContentType().substring(6))
                     .setFileSize(multipartFile.getSize())
                     .setUpdated(new Timestamp(System.currentTimeMillis()));

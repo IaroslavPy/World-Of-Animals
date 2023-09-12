@@ -1,6 +1,9 @@
 server:
   port: 9721
 
+upload:
+  imagePath: W:\Java study\Java Super Pro\uploadImages\
+
 spring:
   mvc:
     servlet:
