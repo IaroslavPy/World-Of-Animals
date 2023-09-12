@@ -8,8 +8,6 @@ import com.example.WorldOfAnimals.models.AnimalImageEntity;
 import com.example.WorldOfAnimals.repositories.AnimalImageRepository;
 import com.example.WorldOfAnimals.repositories.AnimalRepository;
 import com.example.WorldOfAnimals.utils.Constants;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -32,22 +30,15 @@ public class AnimalImageService {
     private final Constants constants;
 
     @Transactional
-    public void uploadAnimalImage(String request, MultipartFile multipartFile) {
-
-        AnimalImageRequestDTO requestDTO = null;
-
-        try {
-            requestDTO = new ObjectMapper().readValue(request, AnimalImageRequestDTO.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public void uploadAnimalImage(AnimalImageRequestDTO animalImageRequestDTO,
+                                  MultipartFile multipartFile) {
 
         try {
             Files.copy(multipartFile.getInputStream(), Paths.get(constants.UPLOAD_IMAGES_PATH +
                     multipartFile.getOriginalFilename()));
 
-            AnimalEntity exampleAnimal = animalRepository.findById(requestDTO.getAnimalId()).orElseThrow(() ->
-                    new AnimalNotFoundException("Animal not found!"));
+            AnimalEntity exampleAnimal = animalRepository.findById(animalImageRequestDTO.getAnimalId())
+                            .orElseThrow(() -> new AnimalNotFoundException("Animal not found!"));
 
             AnimalImageEntity animalImage = new AnimalImageEntity()
                     .setAnimal(exampleAnimal)

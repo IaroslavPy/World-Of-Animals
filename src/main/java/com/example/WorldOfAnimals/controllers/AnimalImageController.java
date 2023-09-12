@@ -1,5 +1,6 @@
 package com.example.WorldOfAnimals.controllers;
 
+import com.example.WorldOfAnimals.dto.AnimalImageRequestDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalImageNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalImageService;
 import lombok.AllArgsConstructor;
@@ -15,9 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/animal/images")
@@ -29,8 +33,8 @@ public class AnimalImageController {
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.OK)
     public void uploadAnimalImage(
-            @RequestParam("file") @NonNull MultipartFile file,
-            @RequestParam("request") @NonNull String request) {
+            @RequestPart @Valid @NonNull AnimalImageRequestDTO request,
+            @RequestPart @NonNull MultipartFile file) {
         service.uploadAnimalImage(request, file);
     }
 
