@@ -122,7 +122,7 @@ FOREIGN KEY (animal_id) REFERENCES animals(id)
 );
 
 
-POST http://localhost:9721/api/animals/images
+POST http://localhost:9721/api/animal/images
 
 current file
 
@@ -133,13 +133,13 @@ JSON (String format)
 }
 
 
-GET http://localhost:9721/api/animals/images/22
+GET http://localhost:9721/api/animal/images/22
 
 
-PUT http://localhost:9721/api/animals/images/24
+PUT http://localhost:9721/api/animal/images/24
 
 current file
 
 
-DELETE http://localhost:9721/api/animals/images/12
+DELETE http://localhost:9721/api/animal/images/12
 
