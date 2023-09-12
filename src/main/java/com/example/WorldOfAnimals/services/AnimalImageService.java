@@ -88,13 +88,9 @@ public class AnimalImageService {
     public void updateAnimalImage(MultipartFile multipartFile, Long id) {
         AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
                 new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
-        try {
-            Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
 
         try {
+            Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
             Files.copy(multipartFile.getInputStream(), Paths.get(Constants.UPLOAD_IMAGES_PATH +
                     multipartFile.getOriginalFilename()));
 
