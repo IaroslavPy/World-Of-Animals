@@ -1,6 +1,9 @@
 server:
   port: 9721
 
+upload:
+  imagePath: W:\Java study\Java Super Pro\uploadImages\
+
 spring:
   mvc:
     servlet:
@@ -15,3 +18,7 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 300MB
