@@ -1,33 +1,33 @@
 
 AnimalTypes
 
-GET http://localhost:9721/api/animals/types
+GET http://localhost:9721/animals/types
 
-GET http://localhost:9721/api/animals/types/5
+GET http://localhost:9721/animals/types/5
 
-POST http://localhost:9721/api/animals/types
+POST http://localhost:9721/animals/types
 
 {
 "name": "Snake"
 }
 
-PUT  http://localhost:9721/api/animals/types
+PUT  http://localhost:9721/animals/types
 {
 "id": 2,
 "name": "Cat"
 }
 
-DELETE http://localhost:9721/api/animals/types/6
+DELETE http://localhost:9721/animals/types/6
 
 
 
 AnimalBreeds
 
-GET http://localhost:9721/api/animals/breeds
+GET http://localhost:9721/animals/breeds
 
-GET http://localhost:9721/api/animals/breeds/page?pageNo=0&size=3
+GET http://localhost:9721/animals/breeds/page?pageNo=0&size=3
 
-POST http://localhost:9721/api/animals/breeds
+POST http://localhost:9721/animals/breeds
 
 {
 "name": "Welsh terrier",
@@ -45,14 +45,14 @@ POST http://localhost:9721/api/animals/breeds
 }
 }
 
-DELETE http://localhost:9721/api/animals/breeds/6
+DELETE http://localhost:9721/animals/breeds/6
 
 
 Animals
 
-GET http://localhost:9721/api/animals
+GET http://localhost:9721/animals
 
-GET http://localhost:9721/api/animals/2
+GET http://localhost:9721/animals/2
 
 {
     "id": 2,
@@ -71,7 +71,7 @@ GET http://localhost:9721/api/animals/2
 }
 
 
-POST http://localhost:9721/api/animals
+POST http://localhost:9721/animals
 
 {
     "name": "Tiger",
@@ -87,7 +87,7 @@ POST http://localhost:9721/api/animals
 }
 
 
-PUT http://localhost:9721/api/animals
+PUT http://localhost:9721/animals
 
 {
     "id": 2,
@@ -103,7 +103,7 @@ PUT http://localhost:9721/api/animals
     }
 }
 
-DELETE http://localhost:9721/api/animals/2
+DELETE http://localhost:9721/animals/2
 
 
 Animal images
@@ -122,7 +122,7 @@ FOREIGN KEY (animal_id) REFERENCES animals(id)
 );
 
 
-POST http://localhost:9721/api/animal/images
+POST http://localhost:9721/animal/images
 
 current file
 
@@ -133,13 +133,13 @@ JSON (String format)
 }
 
 
-GET http://localhost:9721/api/animal/images/22
+GET http://localhost:9721/animal/images/22
 
 
-PUT http://localhost:9721/api/animal/images/24
+PUT http://localhost:9721/animal/images/24
 
 current file
 
 
-DELETE http://localhost:9721/api/animal/images/12
+DELETE http://localhost:9721/animal/images/12
 
