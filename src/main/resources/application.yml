@@ -19,3 +19,12 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+
+devPi:
+  openapi:
+    dev-url: http://localhost:9721
+    prod-url: https://HelpAnimals.com
+
+spring-doc:
+  swagger-ui:
+    tagsSorter: alpha
