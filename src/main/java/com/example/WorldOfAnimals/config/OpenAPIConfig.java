@@ -12,31 +12,45 @@ import java.util.List;
 
 @Configuration
 public class OpenAPIConfig {
-    @Value("${devPi.openapi.dev-url}")
+    @Value("${openapi.dev-url}")
     private String devUrl;
-
-    @Value("${devPi.openapi.prod-url}")
+    @Value("${openapi.dev-url-descr}")
+    private String devUrlDescr;
+    @Value("${openapi.prod-url}")
     private String prodUrl;
+    @Value("${openapi.prod-url-descr}")
+    private String prodUrlDescr;
+    @Value("${openapi.dev-name}")
+    private String devName;
+    @Value("${openapi.dev-email}")
+    private String devEmail;
+    @Value("${openapi.app-name}")
+    private String appName;
+    @Value("${openapi.app-version}")
+    private String appVersion;
+    @Value("${openapi.app-descr}")
+    private String appDescr;
+
 
     @Bean
     public OpenAPI myOpenAPI() {
         Server devServer = new Server();
         devServer.setUrl(devUrl);
-        devServer.setDescription("Server URL in Development environment");
+        devServer.setDescription(devUrlDescr);
 
         Server prodServer = new Server();
         prodServer.setUrl(prodUrl);
-        prodServer.setDescription("Server URL in Production environment");
+        prodServer.setDescription(prodUrlDescr);
 
         Contact contact = new Contact();
-        contact.setEmail("iaroslavpylypchuk@gmail.com");
-        contact.setName("devPi");
+        contact.setEmail(devEmail);
+        contact.setName(devName);
 
         Info info = new Info()
-                .title("World of animals API")
-                .version("1.0")
+                .title(appName)
+                .version(appVersion)
                 .contact(contact)
-                .description("This API exposes endpoints to manage animal images.");
+                .description(appDescr);
 
         return new OpenAPI().info(info).servers(List.of(devServer, prodServer));
     }

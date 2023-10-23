@@ -97,9 +97,6 @@
 					<url>jdbc:mysql://localhost:3306/animals_db</url>
 					<user>devPi</user>
 					<password>devPi</password>
-					<!--					<schemas>-->
-					<!--						<schema>your_database_schema</schema>-->
-					<!--					</schemas>-->
 					<locations>
 						<location>filesystem:src/main/resources/db/migration</location>
 					</locations>
