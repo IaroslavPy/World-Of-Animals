@@ -5,6 +5,8 @@ import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
 import com.example.WorldOfAnimals.services.AnimalBreedService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,12 @@ public class AnimalBreedController {
             description = "For successfully creating animal breeds," +
                     " the animal type must be existed in base"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Breed created"),
+            @ApiResponse(responseCode = "400", description = "Incorrect request"),
+            @ApiResponse(responseCode = "500", description = "Duplicated name " +
+                    "or entity (AnimalType) not exist/incorrect")
+    })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createBreed(@RequestBody AnimalBreedRequestDTO breedRequestDTO) {
