@@ -1,145 +1,61 @@
-
-AnimalTypes
-
-GET http://localhost:9721/animals/types
-
-GET http://localhost:9721/animals/types/5
-
-POST http://localhost:9721/animals/types
-
-{
-"name": "Snake"
-}
-
-PUT  http://localhost:9721/animals/types
-{
-"id": 2,
-"name": "Cat"
-}
-
-DELETE http://localhost:9721/animals/types/6
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 
-AnimalBreeds
+<!-- PROJECT LOGO -->
+<br />
+<div style="text-align: center;">
+  <a href="https://github.com/IaroslavPy/World-Of-Animals">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-GET http://localhost:9721/animals/breeds
+<h1 style="text-align: center;">World of animals</h1>
 
-GET http://localhost:9721/animals/breeds/page?pageNo=0&size=3
+  <p style="text-align: center;">
+    API for helping to find pet from animal shelter
 
-POST http://localhost:9721/animals/breeds
-
-{
-"name": "Welsh terrier",
-"animalType": {
-"id": 1,
-"name": "Dog"
-}
-}
-
-{
-"name": "Bengal",
-"animalType": {
-"id": 2,
-"name": "Cat"
-}
-}
-
-DELETE http://localhost:9721/animals/breeds/6
+  </p>
+</div>
 
 
-Animals
+<!-- ABOUT THE PROJECT -->
+### About The Project
+<div style="text-align: center;">
+<img src="images/start_pets.png" alt="Logo" width="600" height="317">
+</div>
 
-GET http://localhost:9721/animals
+In this application, I combine two important goals: helping you find pets that need a home and care, and demonstrating my skills in Java development. My goal is to make the world a better place for homeless animals and to show how technology can be used for charitable purposes.
 
-GET http://localhost:9721/animals/2
-
-{
-    "id": 2,
-    "name": "Clark",
-    "description": "Free dog",
-    "animalBreedEntity": {
-        "id": 1011,
-        "name": "african",
-        "type": {
-            "id": 1,
-            "name": "Dog"
-        }
-    },
-    "created": "2023-08-14T13:28:13.000+00:00",
-    "updated": "2023-08-14T13:28:13.000+00:00"
-}
+Application Features:
+* **Pet Search:** Provides an easy-to-use interface to search and manage the profile of pets available for adoption at the animal shelter
+* **Animal Profiles:** Each animal has its own profile with photos and descriptions. This helps potential adopters more easily select an animal that suits their preferences
+* **Charity:** Provides the opportunity for users to make donations to animal shelters. This helps provide better care and conditions for homeless animals
+* **Technical aspects:** This project is developed in the Java programming language. I used modern technologies and development techniques such as Java Spring Framework to create a web application and a user-friendly database to store animal information
 
 
-POST http://localhost:9721/animals
+### Built With
 
-{
-    "name": "Tiger",
-    "description": "Tiger 5",
-    "animalBreedDTO": {
-        "id": 1011,
-        "name": "african",
-        "animalTypeDTO": {
-            "id": 1,
-            "name": "Dog"
-        }
-    }
-}
+<img src="https://www.svgrepo.com/show/303388/java-4-logo.svg" width="130" height="90">
+<img src="https://www.vectorlogo.zone/logos/springio/springio-ar21.svg" width="180" height="100">
+<img src="https://www.vectorlogo.zone/logos/mysql/mysql-official.svg" width="130" height="120">
+<img src="https://www.svgrepo.com/show/374111/swagger.svg" width="100" height="100">
+<img src="https://seeklogo.com/images/F/flyway-logo-4BD34A6273-seeklogo.com.png" width="110" height="90">
 
 
-PUT http://localhost:9721/animals
+<!-- CONTACT -->
+### Contact
 
-{
-    "id": 2,
-    "name": "Tiger Updated",
-    "description": "Tiger 5",
-    "animalBreedDTO": {
-        "id": 1011,
-        "name": "african",
-        "animalTypeDTO": {
-            "id": 1,
-            "name": "Dog"
-        }
-    }
-}
+Iaroslav Pylypchuk - [LinkedIn](https://www.linkedin.com/in/iaroslav-pylypchuk-b2487b263/)
 
-DELETE http://localhost:9721/animals/2
+EMail - iaroslavpylypchuk@gmail.com
+
+Project Link: [https://github.com/IaroslavPy/World-Of-Animals](https://github.com/IaroslavPy/World-Of-Animals)
 
 
-Animal images
 
 
-CREATE TABLE IF NOT EXISTS animal_images
-( id BIGINT NOT NULL AUTO_INCREMENT,
-animal_id BIGINT NOT NULL,
-file_path VARCHAR(256) NOT NULL,
-type ENUM('png', 'jpeg'),
-size BIGINT NOT NULL,
-created TIMESTAMP(0) NOT NULL,
-updated TIMESTAMP(0) NOT NULL,
-PRIMARY KEY (id),
-FOREIGN KEY (animal_id) REFERENCES animals(id)
-);
 
 
-POST http://localhost:9721/animal/images
-
-current file
-
-JSON (String format)
-
-{
-"animalId": 3
-}
-
-
-GET http://localhost:9721/animal/images/22
-
-
-PUT http://localhost:9721/animal/images/24
-
-current file
-
-
-DELETE http://localhost:9721/animal/images/12
-
+<!-- MARKDOWN LINKS & IMAGES -->
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/iaroslav-pylypchuk-b2487b263/
