@@ -42,7 +42,7 @@ public class AnimalImageService {
 
             AnimalImageEntity animalImage = new AnimalImageEntity()
                     .setAnimal(exampleAnimal)
-                    .setFilePath(constants.UPLOAD_IMAGES_PATH + multipartFile.getOriginalFilename())
+                    .setFilePath(multipartFile.getOriginalFilename())
                     .setFileType(multipartFile.getContentType().substring(6))
                     .setFileSize(multipartFile.getSize())
                     .setCreated(new Timestamp(System.currentTimeMillis()))
@@ -65,7 +65,7 @@ public class AnimalImageService {
     public Resource getAnimalImageById(Long id) {
         AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
                 new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
-        String path = animalImageEntity.getFilePath();
+        String path = constants.UPLOAD_IMAGES_PATH + animalImageEntity.getFilePath();
         Resource resource = null;
         try {
             resource = new UrlResource(Paths.get(path).toUri());
@@ -82,11 +82,12 @@ public class AnimalImageService {
                 new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
 
         try {
-            Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
+            Files.deleteIfExists(Paths.get(constants.UPLOAD_IMAGES_PATH
+                    + animalImageEntity.getFilePath()));
             Files.copy(multipartFile.getInputStream(), Paths.get(constants.UPLOAD_IMAGES_PATH +
                     multipartFile.getOriginalFilename()));
 
-            animalImageEntity.setFilePath(constants.UPLOAD_IMAGES_PATH + multipartFile.getOriginalFilename())
+            animalImageEntity.setFilePath(multipartFile.getOriginalFilename())
                     .setFileType(multipartFile.getContentType().substring(6))
                     .setFileSize(multipartFile.getSize())
                     .setUpdated(new Timestamp(System.currentTimeMillis()));
@@ -94,7 +95,8 @@ public class AnimalImageService {
                 animalImageRepository.save(animalImageEntity);
             } catch (RuntimeException e) {
                 try {
-                    Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
+                    Files.deleteIfExists(Paths.get(constants.UPLOAD_IMAGES_PATH
+                            + animalImageEntity.getFilePath()));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -109,7 +111,8 @@ public class AnimalImageService {
         AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
                 new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
         try {
-            Files.deleteIfExists(Paths.get(animalImageEntity.getFilePath()));
+            Files.deleteIfExists(Paths.get(constants.UPLOAD_IMAGES_PATH
+                    + animalImageEntity.getFilePath()));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
