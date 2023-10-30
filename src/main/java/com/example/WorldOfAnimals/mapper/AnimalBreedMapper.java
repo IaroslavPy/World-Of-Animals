@@ -2,6 +2,7 @@ package com.example.WorldOfAnimals.mapper;
 
 import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
+import com.example.WorldOfAnimals.dto.AnimalBreedRequestPutDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedResourceDTO;
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
 import com.example.WorldOfAnimals.models.AnimalBreedEntity;
@@ -19,10 +20,21 @@ public class AnimalBreedMapper {
 
     public AnimalBreedEntity convertToEntity(AnimalBreedRequestDTO animalBreedRequestDTO) {
         AnimalBreedEntity animalBreed = new AnimalBreedEntity();
-        AnimalTypeEntity animalType= new AnimalTypeEntity(
+        AnimalTypeEntity animalType = new AnimalTypeEntity(
                 animalBreedRequestDTO.getAnimalTypeDTO().getId(),
                 animalBreedRequestDTO.getAnimalTypeDTO().getName());
         animalBreed.setName(animalBreedRequestDTO.getName());
+        animalBreed.setType(animalType);
+        return animalBreed;
+    }
+
+    public AnimalBreedEntity convertToEntityPut(AnimalBreedRequestPutDTO animalBreedRequestPutDTO) {
+        AnimalBreedEntity animalBreed = new AnimalBreedEntity();
+        AnimalTypeEntity animalType = new AnimalTypeEntity(
+                animalBreedRequestPutDTO.getAnimalTypeDTO().getId(),
+                animalBreedRequestPutDTO.getAnimalTypeDTO().getName());
+        animalBreed.setId(animalBreedRequestPutDTO.getId());
+        animalBreed.setName(animalBreedRequestPutDTO.getName());
         animalBreed.setType(animalType);
         return animalBreed;
     }
@@ -32,7 +44,7 @@ public class AnimalBreedMapper {
         return animalBreeds.stream().map(entity ->
         {
             return new AnimalBreedDTO(entity.getId(), entity.getName(),
-                    new AnimalTypeDTO(entity.getType().getId(),entity.getType().getName()));
+                    new AnimalTypeDTO(entity.getType().getId(), entity.getType().getName()));
         }).toList();
     }
 

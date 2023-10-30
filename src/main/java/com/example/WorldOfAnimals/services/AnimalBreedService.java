@@ -2,7 +2,9 @@ package com.example.WorldOfAnimals.services;
 
 import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
+import com.example.WorldOfAnimals.dto.AnimalBreedRequestPutDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedResourceDTO;
+import com.example.WorldOfAnimals.exceptions.AnimalBreedNameDuplicateException;
 import com.example.WorldOfAnimals.mapper.AnimalBreedMapper;
 import com.example.WorldOfAnimals.models.AnimalBreedEntity;
 import com.example.WorldOfAnimals.repositories.AnimalBreedRepository;
@@ -52,8 +54,14 @@ public class AnimalBreedService {
 
     @Transactional
     public void save(AnimalBreedRequestDTO animalBreedRequestDTO) {
-        AnimalBreedEntity animalBreed = mapper.convertToEntity(animalBreedRequestDTO);
-        repository.save(animalBreed);
+        List<AnimalBreedEntity> animalBreedEntities = repository.findAll();
+        String breedRequestDTOName = animalBreedRequestDTO.getName();
+        if (animalBreedEntities.stream().anyMatch(entity ->
+                entity.getName().equals(breedRequestDTOName))) {
+            throw new AnimalBreedNameDuplicateException("Animal breed name already exists: " +
+                    breedRequestDTOName);
+        }
+        repository.save(mapper.convertToEntity(animalBreedRequestDTO));
     }
 
     public List<AnimalBreedDTO> getAnimalsBreeds() {
@@ -64,6 +72,18 @@ public class AnimalBreedService {
         PageRequest page = PageRequest.of(pageNo, size);
         Page<AnimalBreedEntity> pageResult = repository.findAll(page);
         return mapper.convertToDTOs(pageResult.getContent());
+    }
+
+    @Transactional
+    public void updateAnimalBreed(AnimalBreedRequestPutDTO animalBreedRequestPutDTO) {
+        List<AnimalBreedEntity> animalBreedEntities = repository.findAll();
+        String breedRequestPutDTOName = animalBreedRequestPutDTO.getName();
+        if (animalBreedEntities.stream().anyMatch(entity ->
+                entity.getName().equals(breedRequestPutDTOName))) {
+            throw new AnimalBreedNameDuplicateException("Animal breed name already exists: " +
+                    breedRequestPutDTOName);
+        }
+        repository.save(mapper.convertToEntityPut(animalBreedRequestPutDTO));
     }
 
     @Transactional

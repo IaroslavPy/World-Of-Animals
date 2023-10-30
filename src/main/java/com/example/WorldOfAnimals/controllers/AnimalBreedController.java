@@ -2,6 +2,9 @@ package com.example.WorldOfAnimals.controllers;
 
 import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
+import com.example.WorldOfAnimals.dto.AnimalBreedRequestPutDTO;
+import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
+import com.example.WorldOfAnimals.exceptions.AnimalBreedNameDuplicateException;
 import com.example.WorldOfAnimals.services.AnimalBreedService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,11 +13,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,9 +52,17 @@ public class AnimalBreedController {
                     "or entity (AnimalType) not exist/incorrect")
     })
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createBreed(@RequestBody AnimalBreedRequestDTO breedRequestDTO) {
-        service.save(breedRequestDTO);
+    public ResponseEntity createBreed(@RequestBody AnimalBreedRequestDTO breedRequestDTO) {
+        try {
+            service.save(breedRequestDTO);
+            return ResponseEntity.status(201).build();
+        } catch (AnimalBreedNameDuplicateException e){
+            return ResponseEntity.status(422)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new ErrorResponseDTO("Duplicate unique animal breed name",
+                            "The name - " + breedRequestDTO.getName() +
+                                    " already exists and cannot be repeated"));
+        }
     }
 
     @Operation(
@@ -72,6 +85,19 @@ public class AnimalBreedController {
         return ResponseEntity.ok(service.getAnimalsBreedsPage(pageNo, size));
     }
 
+    @PutMapping
+    public ResponseEntity updateBreed(@RequestBody AnimalBreedRequestPutDTO breedRequestDTO) {
+        try {
+            service.updateAnimalBreed(breedRequestDTO);
+            return ResponseEntity.status(200).build();
+        } catch (AnimalBreedNameDuplicateException e){
+            return ResponseEntity.status(422)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new ErrorResponseDTO("Duplicate unique animal breed name",
+                            "The name - " + breedRequestDTO.getName() +
+                                    " already exists and cannot be repeated"));
+        }
+    }
     @Operation(
             summary = "Delete a breed of animal by ID",
             description = "Delete from DB MySQL"
