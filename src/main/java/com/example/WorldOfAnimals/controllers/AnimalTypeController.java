@@ -2,12 +2,15 @@ package com.example.WorldOfAnimals.controllers;
 
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
 import com.example.WorldOfAnimals.dto.AnimalTypeRequestDTO;
+import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
+import com.example.WorldOfAnimals.exceptions.AnimalTypeNameDuplicateException;
 import com.example.WorldOfAnimals.exceptions.AnimalTypeNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(
         name = "Animal types",
@@ -36,9 +40,17 @@ public class AnimalTypeController {
             summary = "Create new type of animal"
     )
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void saveAnimalType(@RequestBody AnimalTypeRequestDTO animalTypeRequestDTO) {
-        service.saveAnimalType(animalTypeRequestDTO);
+    public ResponseEntity saveAnimalType(@RequestBody AnimalTypeRequestDTO animalTypeRequestDTO) {
+        try {
+            service.saveAnimalType(animalTypeRequestDTO);
+            return ResponseEntity.status(201).build();
+        } catch (AnimalTypeNameDuplicateException e) {
+            return ResponseEntity.status(422)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new ErrorResponseDTO("Duplicate unique animal type name",
+                            "The name - " + animalTypeRequestDTO.getName() +
+                                    " already exists and cannot be repeated"));
+        }
     }
 
     @Operation(
@@ -67,9 +79,17 @@ public class AnimalTypeController {
                     " the type of animal must be existed in base"
     )
     @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void updateAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
-        service.updateAnimalType(animalTypeDTO);
+    public ResponseEntity updateAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
+        try {
+            service.updateAnimalType(animalTypeDTO);
+            return ResponseEntity.status(200).build();
+        } catch (AnimalTypeNameDuplicateException e) {
+            return ResponseEntity.status(422)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new ErrorResponseDTO("Duplicate unique animal type name",
+                            "The name - " + animalTypeDTO.getName() +
+                                    " already exists and cannot be repeated"));
+        }
     }
 
     @Operation(
