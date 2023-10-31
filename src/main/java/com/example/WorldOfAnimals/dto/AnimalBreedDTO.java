@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AnimalBreedDTO {
 
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "Breed ID")
+    @Schema(description = "Breed ID")
     private Integer id;
 
     @Schema(description = "Breed name", example = "eskimo")
