@@ -1,6 +1,7 @@
 package com.example.WorldOfAnimals.services;
 
 import com.example.WorldOfAnimals.dto.AnimalImageRequestDTO;
+import com.example.WorldOfAnimals.dto.AnimalImageRequestPutDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalImageNotFoundException;
 import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.models.AnimalEntity;
@@ -77,9 +78,12 @@ public class AnimalImageService {
     }
 
     @Transactional
-    public void updateAnimalImage(MultipartFile multipartFile, Long id) {
-        AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
-                new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
+    public void updateAnimalImage(MultipartFile multipartFile,
+                                  AnimalImageRequestPutDTO animalImageRequestPutDTO) {
+        AnimalImageEntity animalImageEntity = animalImageRepository.
+                findById(animalImageRequestPutDTO.getAnimalImageId()).orElseThrow(() ->
+                new AnimalImageNotFoundException("Animal image with ID " +
+                        animalImageRequestPutDTO.getAnimalImageId() + " not found!"));
 
         try {
             Files.deleteIfExists(Paths.get(constants.UPLOAD_IMAGES_PATH
