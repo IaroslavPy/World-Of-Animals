@@ -4,54 +4,55 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Configuration
+@ConfigurationProperties(prefix = "openapi")
 public class OpenAPIConfig {
-    @Value("${openapi.dev-url}")
-    private String devUrl;
-    @Value("${openapi.dev-url-descr}")
-    private String devUrlDescr;
-    @Value("${openapi.prod-url}")
-    private String prodUrl;
-    @Value("${openapi.prod-url-descr}")
-    private String prodUrlDescr;
-    @Value("${openapi.dev-name}")
+
     private String devName;
-    @Value("${openapi.dev-email}")
+
     private String devEmail;
-    @Value("${openapi.app-name}")
-    private String appName;
-    @Value("${openapi.app-version}")
+
+    private Object appName;
+
     private String appVersion;
-    @Value("${openapi.app-descr}")
+
     private String appDescr;
 
+    private List<String> serversUrl;
+
+    private List<String> serversDescr;
 
     @Bean
     public OpenAPI myOpenAPI() {
-        Server devServer = new Server();
-        devServer.setUrl(devUrl);
-        devServer.setDescription(devUrlDescr);
 
-        Server prodServer = new Server();
-        prodServer.setUrl(prodUrl);
-        prodServer.setDescription(prodUrlDescr);
+        List<Server> servers = new ArrayList<>();
+
+        for (int i = 0; i < serversUrl.size(); i++) {
+            Server server = new Server();
+            server.setUrl(serversUrl.get(i));
+            server.setDescription(serversDescr.get(i));
+            servers.add(server);
+        }
 
         Contact contact = new Contact();
         contact.setEmail(devEmail);
         contact.setName(devName);
 
         Info info = new Info()
-                .title(appName)
+                .title((String) appName)
                 .version(appVersion)
                 .contact(contact)
                 .description(appDescr);
 
-        return new OpenAPI().info(info).servers(List.of(devServer, prodServer));
+        return new OpenAPI().info(info).servers(servers);
     }
 }

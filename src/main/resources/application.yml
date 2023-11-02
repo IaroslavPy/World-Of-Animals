@@ -20,18 +20,18 @@ spring:
       max-file-size: 50MB
       max-request-size: 50MB
 
-
 openapi:
-  dev-url: http://localhost:9721
-  prod-url: https://HelpAnimals.com
-  dev-url-descr: Server URL in Development environment
-  prod-url-descr: Server URL in Production environment
-  dev-name: devPi
-  dev-email: iaroslavpylypchuk@gmail.com
-  app-name: World of animals API
-  app-version: 1.0
-  app-descr: This API exposes endpoints to manage animal images
-
+  devName: devPi
+  devEmail: iaroslavpylypchuk@gmail.com
+  appName: World of animals API
+  appVersion: 1.0
+  appDescr: This API exposes endpoints to manage animal images
+  serversUrl:
+    - http://localhost:9721
+    - https://HelpAnimals.com
+  serversDescr:
+    - Server URL in Development environment
+    - Server URL in Production environment
 
 spring-doc:
   swagger-ui:
