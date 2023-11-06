@@ -4,54 +4,42 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Configuration
-@ConfigurationProperties(prefix = "openapi")
 public class OpenAPIConfig {
 
-    private String devName;
+    private final OpenApiProperties openApiProperties;
 
-    private String devEmail;
-
-    private Object appName;
-
-    private String appVersion;
-
-    private String appDescr;
-
-    private List<String> serversUrl;
-
-    private List<String> serversDescr;
+    public OpenAPIConfig(OpenApiProperties openApiProperties) {
+        this.openApiProperties = openApiProperties;
+    }
 
     @Bean
     public OpenAPI myOpenAPI() {
 
         List<Server> servers = new ArrayList<>();
 
-        for (int i = 0; i < serversUrl.size(); i++) {
+        for (int i = 0; i < openApiProperties.getServersUrl().size(); i++) {
             Server server = new Server();
-            server.setUrl(serversUrl.get(i));
-            server.setDescription(serversDescr.get(i));
+            server.setUrl(openApiProperties.getServersUrl().get(i));
+            server.setDescription(openApiProperties.getServersDescr().get(i));
             servers.add(server);
         }
 
         Contact contact = new Contact();
-        contact.setEmail(devEmail);
-        contact.setName(devName);
+        contact.setEmail(openApiProperties.getDevEmail());
+        contact.setName(openApiProperties.getDevName());
 
         Info info = new Info()
-                .title((String) appName)
-                .version(appVersion)
+                .title((String) openApiProperties.getAppName())
+                .version(openApiProperties.getAppVersion())
                 .contact(contact)
-                .description(appDescr);
+                .description(openApiProperties.getAppDescr());
 
         return new OpenAPI().info(info).servers(servers);
     }
