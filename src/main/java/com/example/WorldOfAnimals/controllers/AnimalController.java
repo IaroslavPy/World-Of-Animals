@@ -3,6 +3,7 @@ package com.example.WorldOfAnimals.controllers;
 import com.example.WorldOfAnimals.dto.AnimalDTO;
 import com.example.WorldOfAnimals.dto.AnimalRequestDTO;
 import com.example.WorldOfAnimals.dto.AnimalRequestPutDTO;
+import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -45,6 +48,7 @@ public class AnimalController {
             @ApiResponse(responseCode = "201", description = "Animal created"),
     })
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void saveAnimal(@RequestBody AnimalRequestDTO animalRequestDTO) {
         service.saveAnimal(animalRequestDTO);
     }
@@ -58,15 +62,15 @@ public class AnimalController {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = AnimalDTO.class))
                     }),
-            @ApiResponse(responseCode = "404", description = "Animal not found")
+            @ApiResponse(responseCode = "404", description = "Animal not found",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorResponseDTO.class))
+                    })
     })
     @GetMapping("/{id}")
     public ResponseEntity<AnimalDTO> getAnimalById(@PathVariable("id") Long id) {
-        try {
-            return ResponseEntity.ok(service.getAnimalById(id));
-        } catch (AnimalNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(service.getAnimalById(id));
     }
 
     @Operation(
@@ -93,17 +97,16 @@ public class AnimalController {
             @ApiResponse(responseCode = "200",
                     description = "Animal updated"),
             @ApiResponse(responseCode = "404",
-                    description = "Animal for updating not found")
+                    description = "Animal for updating not found",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorResponseDTO.class))
+                    })
     })
     @PutMapping
-    public ResponseEntity putAnimal(@RequestBody AnimalRequestPutDTO animalRequestPutDTO) {
-        try {
+    @ResponseStatus(HttpStatus.OK)
+    public void putAnimal(@RequestBody AnimalRequestPutDTO animalRequestPutDTO) {
             service.updateAnimal(animalRequestPutDTO);
-            return ResponseEntity.ok().build();
-        } catch (AnimalNotFoundException e) {
-            e.printStackTrace();
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @Operation(

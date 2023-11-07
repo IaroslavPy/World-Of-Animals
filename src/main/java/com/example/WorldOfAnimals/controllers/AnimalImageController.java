@@ -3,6 +3,7 @@ package com.example.WorldOfAnimals.controllers;
 import com.example.WorldOfAnimals.dto.AnimalDTO;
 import com.example.WorldOfAnimals.dto.AnimalImageRequestDTO;
 import com.example.WorldOfAnimals.dto.AnimalImageRequestPutDTO;
+import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
 import com.example.WorldOfAnimals.exceptions.AnimalImageNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalImageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,7 +55,12 @@ public class AnimalImageController {
                     "Swagger creates incorrect headers by default in this case."
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Image uploaded")
+            @ApiResponse(responseCode = "200", description = "Image uploaded"),
+            @ApiResponse(responseCode = "400", description = "Animal for uploading image not found",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorResponseDTO.class))
+                    })
     })
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public void uploadAnimalImage(
@@ -73,15 +81,15 @@ public class AnimalImageController {
                             @Content(mediaType = "image/jpeg",
                                     schema = @Schema(implementation = AnimalDTO.class))
                     }),
-            @ApiResponse(responseCode = "404", description = "Animal not found")
+            @ApiResponse(responseCode = "404", description = "Animal for uploading image not found",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorResponseDTO.class))
+                    })
     })
     @GetMapping(value = "/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Resource> getAnimalImageById(@PathVariable("id") Long id) {
-        try {
-            return ResponseEntity.ok(service.getAnimalImageById(id));
-        } catch (AnimalImageNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(service.getAnimalImageById(id));
     }
 
     @Operation(
@@ -98,20 +106,20 @@ public class AnimalImageController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Animal image updated"),
-            @ApiResponse(responseCode = "404", description = "Animal image for updating not found")
+            @ApiResponse(responseCode = "404", description = "Animal image for updating not found",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorResponseDTO.class))
+                    })
     })
     @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity updateAnimalImage(
+    @ResponseStatus(HttpStatus.OK)
+    public void updateAnimalImage(
             @Parameter(description = "Existed ID (animal)")
             @RequestPart @Valid @NonNull AnimalImageRequestPutDTO request,
             @Parameter(description = "50 Mb - max file size")
             @RequestPart @NonNull MultipartFile file) {
-        try {
-            service.updateAnimalImage(file, request);
-            return ResponseEntity.ok().build();
-        } catch (AnimalImageNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        service.updateAnimalImage(file, request);
     }
 
     @Operation(
@@ -120,15 +128,15 @@ public class AnimalImageController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Delete image"),
-            @ApiResponse(responseCode = "404", description = "Image not found")
+            @ApiResponse(responseCode = "404", description = "Image not found",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorResponseDTO.class))
+                    })
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteAnimalImageById(@PathVariable(value = "id") Long id) {
-        try {
-            service.deleteAnimalImageById(id);
-            return ResponseEntity.ok().build();
-        } catch (AnimalImageNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAnimalImageById(@PathVariable(value = "id") Long id) {
+        service.deleteAnimalImageById(id);
     }
 }

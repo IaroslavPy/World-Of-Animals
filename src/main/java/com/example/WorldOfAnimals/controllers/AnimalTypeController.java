@@ -3,7 +3,6 @@ package com.example.WorldOfAnimals.controllers;
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
 import com.example.WorldOfAnimals.dto.AnimalTypeRequestDTO;
 import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
-import com.example.WorldOfAnimals.exceptions.AnimalTypeNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -13,8 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -48,17 +47,9 @@ public class AnimalTypeController {
                             schema = @Schema(implementation = ErrorResponseDTO.class))})
     })
     @PostMapping
-    public ResponseEntity saveAnimalType(@RequestBody AnimalTypeRequestDTO animalTypeRequestDTO) {
-        try {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveAnimalType(@RequestBody AnimalTypeRequestDTO animalTypeRequestDTO) {
             service.saveAnimalType(animalTypeRequestDTO);
-            return ResponseEntity.status(201).build();
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(400)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(new ErrorResponseDTO("Bad request",
-                            "The name - " + animalTypeRequestDTO.getName() +
-                                    " already exists and cannot be repeated" ));
-        }
     }
 
     @Operation(
@@ -85,15 +76,13 @@ public class AnimalTypeController {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = AnimalTypeDTO.class))
                     }),
-            @ApiResponse(responseCode = "404", description = "Type not found")
+            @ApiResponse(responseCode = "404", description = "Type not found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponseDTO.class))})
     })
     @GetMapping("/{id}")
     public ResponseEntity<AnimalTypeDTO> getAnimalTypeById(@PathVariable("id") Integer id) {
-        try {
             return ResponseEntity.ok(service.getAnimalTypeById(id));
-        } catch (AnimalTypeNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @Operation(
@@ -111,17 +100,9 @@ public class AnimalTypeController {
                     })
     })
     @PutMapping
-    public ResponseEntity updateAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
-        try {
+    @ResponseStatus(HttpStatus.OK)
+    public void updateAnimalType(@RequestBody AnimalTypeDTO animalTypeDTO) {
             service.updateAnimalType(animalTypeDTO);
-            return ResponseEntity.status(200).build();
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(400)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(new ErrorResponseDTO("Bad request",
-                            "The name - " + animalTypeDTO.getName() +
-                                    " already exists and cannot be repeated"));
-        }
     }
 
     @Operation(

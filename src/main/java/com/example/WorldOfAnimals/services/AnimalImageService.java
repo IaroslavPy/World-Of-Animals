@@ -34,12 +34,13 @@ public class AnimalImageService {
     public void uploadAnimalImage(AnimalImageRequestDTO animalImageRequestDTO,
                                   MultipartFile multipartFile) {
 
+        AnimalEntity exampleAnimal = animalRepository.findById(animalImageRequestDTO.getAnimalId())
+                .orElseThrow(() -> new AnimalNotFoundException("Animal for uploading image with " +
+                        animalImageRequestDTO.getAnimalId() + " ID - not found!"));
+
         try {
             Files.copy(multipartFile.getInputStream(), Paths.get(constants.UPLOAD_IMAGES_PATH +
                     multipartFile.getOriginalFilename()));
-
-            AnimalEntity exampleAnimal = animalRepository.findById(animalImageRequestDTO.getAnimalId())
-                            .orElseThrow(() -> new AnimalNotFoundException("Animal not found!"));
 
             AnimalImageEntity animalImage = new AnimalImageEntity()
                     .setAnimal(exampleAnimal)
