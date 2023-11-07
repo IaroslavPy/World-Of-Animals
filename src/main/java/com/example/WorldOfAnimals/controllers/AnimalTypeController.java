@@ -3,7 +3,6 @@ package com.example.WorldOfAnimals.controllers;
 import com.example.WorldOfAnimals.dto.AnimalTypeDTO;
 import com.example.WorldOfAnimals.dto.AnimalTypeRequestDTO;
 import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
-import com.example.WorldOfAnimals.exceptions.AnimalTypeNameDuplicateException;
 import com.example.WorldOfAnimals.exceptions.AnimalTypeNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalTypeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,7 +43,7 @@ public class AnimalTypeController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Type created"),
-            @ApiResponse(responseCode = "422", description = "Duplicate unique animal type name",
+            @ApiResponse(responseCode = "400", description = "Duplicate unique animal type name",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponseDTO.class))})
     })
@@ -52,12 +52,12 @@ public class AnimalTypeController {
         try {
             service.saveAnimalType(animalTypeRequestDTO);
             return ResponseEntity.status(201).build();
-        } catch (AnimalTypeNameDuplicateException e) {
-            return ResponseEntity.status(422)
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(400)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(new ErrorResponseDTO("Duplicate unique animal type name",
+                    .body(new ErrorResponseDTO("Bad request",
                             "The name - " + animalTypeRequestDTO.getName() +
-                                    " already exists and cannot be repeated"));
+                                    " already exists and cannot be repeated" ));
         }
     }
 
@@ -104,7 +104,7 @@ public class AnimalTypeController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Type updated or created (if breed ID still don't exist in DB)"),
-            @ApiResponse(responseCode = "422", description = "Duplicate unique type name",
+            @ApiResponse(responseCode = "400", description = "Duplicate unique animal type name",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorResponseDTO.class))
@@ -115,10 +115,10 @@ public class AnimalTypeController {
         try {
             service.updateAnimalType(animalTypeDTO);
             return ResponseEntity.status(200).build();
-        } catch (AnimalTypeNameDuplicateException e) {
-            return ResponseEntity.status(422)
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(400)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(new ErrorResponseDTO("Duplicate unique animal type name",
+                    .body(new ErrorResponseDTO("Bad request",
                             "The name - " + animalTypeDTO.getName() +
                                     " already exists and cannot be repeated"));
         }

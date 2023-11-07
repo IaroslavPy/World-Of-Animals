@@ -4,7 +4,6 @@ import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestPutDTO;
 import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
-import com.example.WorldOfAnimals.exceptions.AnimalBreedNameDuplicateException;
 import com.example.WorldOfAnimals.services.AnimalBreedService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,7 +48,7 @@ public class AnimalBreedController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Breed created"),
-            @ApiResponse(responseCode = "422", description = "Duplicate unique animal breed name",
+            @ApiResponse(responseCode = "400", description = "Duplicate unique animal breed name",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponseDTO.class))}),
     })
@@ -57,8 +57,8 @@ public class AnimalBreedController {
         try {
             service.save(breedRequestDTO);
             return ResponseEntity.status(201).build();
-        } catch (AnimalBreedNameDuplicateException e) {
-            return ResponseEntity.status(422)
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(400)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(new ErrorResponseDTO("Duplicate unique animal breed name",
                             "The name - " + breedRequestDTO.getName() +
@@ -120,8 +120,8 @@ public class AnimalBreedController {
         try {
             service.updateAnimalBreed(breedRequestDTO);
             return ResponseEntity.status(200).build();
-        } catch (AnimalBreedNameDuplicateException e) {
-            return ResponseEntity.status(422)
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(400)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(new ErrorResponseDTO("Duplicate unique animal breed name",
                             "The name - " + breedRequestDTO.getName() +
