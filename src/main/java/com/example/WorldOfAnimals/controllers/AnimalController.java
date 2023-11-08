@@ -68,7 +68,7 @@ public class AnimalController {
                     })
     })
     @GetMapping("/{id}")
-    public ResponseEntity<AnimalDTO> getAnimalById(@PathVariable("id") Long id) {
+    public ResponseEntity<AnimalDTO> findAnimalById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.getAnimalById(id));
     }
 
@@ -104,7 +104,7 @@ public class AnimalController {
     })
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void putAnimal(@RequestBody AnimalRequestPutDTO animalRequestPutDTO) {
+    public void updateAnimal(@RequestBody AnimalRequestPutDTO animalRequestPutDTO) {
             service.updateAnimal(animalRequestPutDTO);
     }
 

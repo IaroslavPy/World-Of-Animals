@@ -81,8 +81,8 @@ public class AnimalTypeController {
                             schema = @Schema(implementation = ErrorResponseDTO.class))})
     })
     @GetMapping("/{id}")
-    public ResponseEntity<AnimalTypeDTO> getAnimalTypeById(@PathVariable("id") Integer id) {
-            return ResponseEntity.ok(service.getAnimalTypeById(id));
+    public ResponseEntity<AnimalTypeDTO> findAnimalTypeById(@PathVariable("id") Integer id) {
+            return ResponseEntity.ok(service.findAnimalTypeById(id));
     }
 
     @Operation(

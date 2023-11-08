@@ -64,7 +64,7 @@ public class AnimalImageService {
         }
     }
 
-    public Resource getAnimalImageById(Long id) {
+    public Resource findAnimalImageById(Long id) {
         AnimalImageEntity animalImageEntity = animalImageRepository.findById(id).orElseThrow(() ->
                 new AnimalImageNotFoundException("Animal image with ID " + id + " not found!"));
         String path = constants.UPLOAD_IMAGES_PATH + animalImageEntity.getFilePath();

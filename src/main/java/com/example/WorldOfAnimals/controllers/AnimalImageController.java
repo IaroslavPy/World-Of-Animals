@@ -88,9 +88,9 @@ public class AnimalImageController {
                     })
     })
     @GetMapping(value = "/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<?> getAnimalImageById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> findAnimalImageById(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok(service.getAnimalImageById(id));
+            return ResponseEntity.ok(service.findAnimalImageById(id));
         } catch (AnimalImageNotFoundException e) {
             return ResponseEntity
                     .status(404)

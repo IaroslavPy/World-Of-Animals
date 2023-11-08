@@ -29,7 +29,7 @@ public class AnimalTypeService {
         return mapper.convertToDTOs(new ArrayList<>(repository.findAll()));
     }
 
-    public AnimalTypeDTO getAnimalTypeById(Integer id) {
+    public AnimalTypeDTO findAnimalTypeById(Integer id) {
         return mapper.convertToDTO(repository.findById(id).orElseThrow(() ->
                 new AnimalTypeNotFoundException("Animal type with ID "
                         + id + " not found!")));
