@@ -4,7 +4,6 @@ import com.example.WorldOfAnimals.dto.AnimalDTO;
 import com.example.WorldOfAnimals.dto.AnimalImageRequestDTO;
 import com.example.WorldOfAnimals.dto.AnimalImageRequestPutDTO;
 import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
-import com.example.WorldOfAnimals.exceptions.AnimalImageNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -46,13 +45,7 @@ public class AnimalImageController {
     @Operation(
             summary = "Create (upload) new animal image",
             description = "For successfully creating (uploading) animal image (max size - 50 Mb)," +
-                    " the animal must be existed in base.\\\n Curl example (correct):\\\n" +
-                    "curl --silent --location --request POST 'http://localhost:9721/animal/images' \\\n" +
-                    "--form 'file=@\"nLLaUeL60/_48.JPG\"' \\\n" +
-                    "--form 'request=\"{\n" +
-                    "\\\"animalId\\\": 1\n" +
-                    "}\";type=application/json' \\\n" +
-                    "Swagger creates incorrect headers by default in this case."
+                    " the animal must be existed in base."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image uploaded"),
@@ -96,13 +89,7 @@ public class AnimalImageController {
             summary = "Update (upload) an animal image by ID",
             description = "For successfully updating (uploading)" +
                     " an animal image (50 Mb - max file size)," +
-                    " the the animal image must be existed in base. " +
-                    "\\\n Curl example (correct):\\\n" +
-                    "curl --silent --location --request PUT 'http://localhost:9721/animal/images' \\\n" +
-                    "--form 'file=@\"Eko8crIL1/heli_004.jpg\"' \\\n" +
-                    "--form 'request=\"{\\\"animalImageId\\\": 1\n" +
-                    "}\";type=application/json'\\\n" +
-                    "Swagger creates incorrect headers by default in this case."
+                    " the the animal image must be existed in base."
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Animal image updated"),
