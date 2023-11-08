@@ -4,7 +4,6 @@ import com.example.WorldOfAnimals.dto.AnimalDTO;
 import com.example.WorldOfAnimals.dto.AnimalRequestDTO;
 import com.example.WorldOfAnimals.dto.AnimalRequestPutDTO;
 import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
-import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.services.AnimalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
