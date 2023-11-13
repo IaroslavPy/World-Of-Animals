@@ -2,6 +2,7 @@ package com.example.WorldOfAnimals.services;
 
 import com.example.WorldOfAnimals.dto.AnimalBreedDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedRequestDTO;
+import com.example.WorldOfAnimals.dto.AnimalBreedRequestPutDTO;
 import com.example.WorldOfAnimals.dto.AnimalBreedResourceDTO;
 import com.example.WorldOfAnimals.mapper.AnimalBreedMapper;
 import com.example.WorldOfAnimals.models.AnimalBreedEntity;
@@ -52,8 +53,7 @@ public class AnimalBreedService {
 
     @Transactional
     public void save(AnimalBreedRequestDTO animalBreedRequestDTO) {
-        AnimalBreedEntity animalBreed = mapper.convertToEntity(animalBreedRequestDTO);
-        repository.save(animalBreed);
+        repository.save(mapper.convertToEntity(animalBreedRequestDTO));
     }
 
     public List<AnimalBreedDTO> getAnimalsBreeds() {
@@ -64,6 +64,11 @@ public class AnimalBreedService {
         PageRequest page = PageRequest.of(pageNo, size);
         Page<AnimalBreedEntity> pageResult = repository.findAll(page);
         return mapper.convertToDTOs(pageResult.getContent());
+    }
+
+    @Transactional
+    public void updateAnimalBreed(AnimalBreedRequestPutDTO animalBreedRequestPutDTO) {
+        repository.save(mapper.convertToEntityPut(animalBreedRequestPutDTO));
     }
 
     @Transactional

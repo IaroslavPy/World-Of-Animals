@@ -5,9 +5,6 @@ upload:
   imagePath: W:\Java study\Java Super Pro\uploadImages\
 
 spring:
-  mvc:
-    servlet:
-      path: /api
   datasource:
     url: jdbc:mysql://localhost:3306/animals_db
     username: devPi
@@ -20,5 +17,22 @@ spring:
     show-sql: true
   servlet:
     multipart:
-      max-file-size: 300MB
-      max-request-size: 300MB
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+openapi:
+  devName: devPi
+  devEmail: iaroslavpylypchuk@gmail.com
+  appName: World of animals API
+  appVersion: 1.0
+  appDescr: This API exposes endpoints to manage animal images
+  serversUrl:
+    - http://localhost:9721
+    - https://HelpAnimals.com
+  serversDescr:
+    - Server URL in Development environment
+    - Server URL in Production environment
+
+spring-doc:
+  swagger-ui:
+    tagsSorter: alpha
