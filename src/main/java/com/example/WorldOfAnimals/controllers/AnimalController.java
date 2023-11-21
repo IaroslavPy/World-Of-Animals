@@ -88,6 +88,36 @@ public class AnimalController {
     }
 
     @Operation(
+            summary = "Retrieve all dogs"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get all dogs",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDTO.class)))
+                    })
+    })
+    @GetMapping("/dogs")
+    public ResponseEntity<List<AnimalDTO>> getAllDogs() {
+        return ResponseEntity.ok(service.getAllDogs());
+    }
+
+    @Operation(
+            summary = "Retrieve all cats"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get all cats",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDTO.class)))
+                    })
+    })
+    @GetMapping("/cats")
+    public ResponseEntity<List<AnimalDTO>> getAllCats() {
+        return ResponseEntity.ok(service.getAllCats());
+    }
+
+    @Operation(
             summary = "Update an animal by ID",
             description = "For successfully updating animal," +
                     " the animal breed must be existed in base"
@@ -105,7 +135,7 @@ public class AnimalController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateAnimal(@RequestBody AnimalRequestPutDTO animalRequestPutDTO) {
-            service.updateAnimal(animalRequestPutDTO);
+        service.updateAnimal(animalRequestPutDTO);
     }
 
     @Operation(

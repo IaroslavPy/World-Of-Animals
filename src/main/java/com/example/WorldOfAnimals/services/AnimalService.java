@@ -35,6 +35,14 @@ public class AnimalService {
         return mapper.convertToDTOs(repository.findAll());
     }
 
+    public List<AnimalDTO> getAllDogs() {
+        return mapper.convertToDTOs(repository.getAllDogs());
+    }
+
+    public List<AnimalDTO> getAllCats() {
+        return mapper.convertToDTOs(repository.getAllCats());
+    }
+
     @Transactional
     public void updateAnimal(AnimalRequestPutDTO animalRequestPutDTO) {
         AnimalEntity entityFromBD = repository.findById(animalRequestPutDTO.getId()).orElseThrow(() ->
