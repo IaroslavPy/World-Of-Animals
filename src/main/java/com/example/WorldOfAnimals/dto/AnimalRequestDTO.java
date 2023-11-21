@@ -1,6 +1,6 @@
 package com.example.WorldOfAnimals.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,13 @@ import lombok.Setter;
 public class AnimalRequestDTO {
 
     private String name;
+
+    @Schema(description = "Enum (one character) - M = Male, F = Female", example = "F")
+    private String sex;
+
+    private String age;
+
+    private String size;
 
     private String description;
 

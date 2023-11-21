@@ -1,5 +1,6 @@
 package com.example.WorldOfAnimals.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +30,16 @@ public class AnimalEntity {
 
     @Column(name = "name")
     private String name;
+
+    @Schema(description = "Enum - M = Male, F = Female", example = "F")
+    @Column(name = "sex", nullable = false)
+    private String sex;
+
+    @Column(name = "age", nullable = false)
+    private String age;
+
+    @Column(name = "size", nullable = false)
+    private String size;
 
     @Column(name = "description")
     private String description;
