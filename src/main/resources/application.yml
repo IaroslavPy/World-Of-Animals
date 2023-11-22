@@ -19,7 +19,10 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
-
+  security:
+    user:
+      name: admin
+      password: admin
 openapi:
   devName: devPi
   devEmail: iaroslavpylypchuk@gmail.com
