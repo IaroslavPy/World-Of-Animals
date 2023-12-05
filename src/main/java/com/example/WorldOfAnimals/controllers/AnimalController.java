@@ -13,6 +13,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,10 +25,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Tag(
         name = "Animals",
@@ -82,39 +86,11 @@ public class AnimalController {
                                     array = @ArraySchema(schema = @Schema(implementation = AnimalDTO.class)))
                     })
     })
+
     @GetMapping
-    public ResponseEntity<List<AnimalDTO>> getAnimals() {
-        return ResponseEntity.ok(service.getAnimals());
-    }
-
-    @Operation(
-            summary = "Retrieve all dogs"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Get all dogs",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDTO.class)))
-                    })
-    })
-    @GetMapping("/dogs")
-    public ResponseEntity<List<AnimalDTO>> getAllDogs() {
-        return ResponseEntity.ok(service.getAllDogs());
-    }
-
-    @Operation(
-            summary = "Retrieve all cats"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Get all cats",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDTO.class)))
-                    })
-    })
-    @GetMapping("/cats")
-    public ResponseEntity<List<AnimalDTO>> getAllCats() {
-        return ResponseEntity.ok(service.getAllCats());
+    public Page<AnimalDTO> getPaginatedAnimals(
+            @PageableDefault(size = 5, sort = "name") @NotNull Pageable pageable) {
+        return service.getPaginatedAnimals(pageable);
     }
 
     @Operation(
