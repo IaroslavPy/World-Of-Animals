@@ -77,16 +77,11 @@ public class AnimalController {
     }
 
     @Operation(
-            summary = "Retrieve all animals"
+            summary = "Retrieve all animals with pagination"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Get all animals",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDTO.class)))
-                    })
+            @ApiResponse(responseCode = "200", description = "Get all animals (pagination)")
     })
-
     @GetMapping
     public Page<AnimalDTO> getPaginatedAnimals(
             @PageableDefault(size = 5, sort = "name") @NotNull Pageable pageable) {
