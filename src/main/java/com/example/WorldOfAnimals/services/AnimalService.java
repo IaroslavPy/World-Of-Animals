@@ -8,6 +8,9 @@ import com.example.WorldOfAnimals.mapper.AnimalMapper;
 import com.example.WorldOfAnimals.models.AnimalEntity;
 import com.example.WorldOfAnimals.repositories.AnimalRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +34,13 @@ public class AnimalService {
                         id + " not found!")));
     }
 
-    public List<AnimalDTO> getAnimals() {
-        return mapper.convertToDTOs(repository.findAll());
+    public Page<AnimalDTO> getPaginatedAnimals(Pageable pageable) {
+        Page<AnimalEntity> animalEntityPage = repository.findAll(pageable);
+        List<AnimalDTO> animalDTOList = animalEntityPage.getContent().stream()
+                .map(mapper::convertToDTO)
+                .toList();
+        return new PageImpl<>(animalDTOList, animalEntityPage.getPageable(),
+                animalEntityPage.getTotalElements());
     }
 
     @Transactional

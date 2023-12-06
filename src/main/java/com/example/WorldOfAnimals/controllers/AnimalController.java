@@ -6,13 +6,16 @@ import com.example.WorldOfAnimals.dto.AnimalRequestPutDTO;
 import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
 import com.example.WorldOfAnimals.services.AnimalService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Tag(
         name = "Animals",
@@ -73,18 +76,16 @@ public class AnimalController {
     }
 
     @Operation(
-            summary = "Retrieve all animals"
+            summary = "Retrieve all animals with pagination"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Get all animals",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDTO.class)))
-                    })
+            @ApiResponse(responseCode = "200", description = "Get all animals (pagination)")
     })
     @GetMapping
-    public ResponseEntity<List<AnimalDTO>> getAnimals() {
-        return ResponseEntity.ok(service.getAnimals());
+    public Page<AnimalDTO> getPaginatedAnimals(
+            @PageableDefault(size = 5, sort = "name")
+            @ParameterObject @NotNull Pageable pageable) {
+        return service.getPaginatedAnimals(pageable);
     }
 
     @Operation(
@@ -105,7 +106,7 @@ public class AnimalController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateAnimal(@RequestBody AnimalRequestPutDTO animalRequestPutDTO) {
-            service.updateAnimal(animalRequestPutDTO);
+        service.updateAnimal(animalRequestPutDTO);
     }
 
     @Operation(
