@@ -7,6 +7,8 @@ import com.example.WorldOfAnimals.exceptions.AnimalNotFoundException;
 import com.example.WorldOfAnimals.mapper.AnimalMapper;
 import com.example.WorldOfAnimals.models.AnimalEntity;
 import com.example.WorldOfAnimals.repositories.AnimalRepository;
+import com.example.WorldOfAnimals.utils.AnimalFilter;
+import com.example.WorldOfAnimals.utils.AnimalSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -41,6 +43,15 @@ public class AnimalService {
                 .toList();
         return new PageImpl<>(animalDTOList, animalEntityPage.getPageable(),
                 animalEntityPage.getTotalElements());
+    }
+
+    public Page<AnimalDTO> getFilteredAndPaginatedAnimals(AnimalFilter filter, Pageable pageable) {
+        AnimalSpecification specification = new AnimalSpecification(filter);
+        Page<AnimalEntity> all = repository.findAll(specification, pageable);
+        List<AnimalDTO> animalDTOList = all.getContent().stream()
+                .map(mapper::convertToDTO)
+                .toList();
+        return new PageImpl<>(animalDTOList, all.getPageable(), all.getTotalElements());
     }
 
     @Transactional

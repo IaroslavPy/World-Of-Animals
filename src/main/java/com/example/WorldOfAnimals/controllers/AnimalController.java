@@ -5,6 +5,7 @@ import com.example.WorldOfAnimals.dto.AnimalRequestDTO;
 import com.example.WorldOfAnimals.dto.AnimalRequestPutDTO;
 import com.example.WorldOfAnimals.dto.ErrorResponseDTO;
 import com.example.WorldOfAnimals.services.AnimalService;
+import com.example.WorldOfAnimals.utils.AnimalFilter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -86,6 +87,21 @@ public class AnimalController {
             @PageableDefault(size = 5, sort = "name")
             @ParameterObject @NotNull Pageable pageable) {
         return service.getPaginatedAnimals(pageable);
+    }
+
+    @Operation(
+            summary = "Retrieve all animals according by filter with pagination"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Get all animals (filter and pagination)")
+    })
+    @GetMapping("/filter")
+    public Page<AnimalDTO> getPaginatedAnimalsT(
+            @ParameterObject @NotNull AnimalFilter filter,
+            @ParameterObject @PageableDefault(size = 5, sort = "name") @NotNull Pageable page
+    ) {
+        return service.getFilteredAndPaginatedAnimals(filter, page);
     }
 
     @Operation(
